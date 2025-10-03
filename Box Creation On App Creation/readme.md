@@ -28,6 +28,10 @@ However, with the new protocol update, this same logic can be easily replicated 
 https://lora.algokit.io/testnet/transaction/YIMHVBFPFNBGWMYMHC4VWZO57FNXZXVOMCXLIY7LFAJSST5QV7ZQ
 
 
+## Additional Information
+
+The code for `get_application_address` mentioned previously for the *guessing* trick.
+
 ```
 
 # APPID_PREFIX = b"appID"
