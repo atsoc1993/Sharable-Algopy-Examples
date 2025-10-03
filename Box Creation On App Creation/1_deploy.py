@@ -97,10 +97,12 @@ txn_response= factory_client.send.create_test_contract_child_and_box(
     args=CreateTestContractChildAndBoxArgs(
         mbr_payment=mbr_payment,
     ),
+
+    #also tried with a app id 0 & actual box name
     params=CommonAppCallParams(
         app_references=[0, test_contract_template_client.app_id],
         box_references=[
-            BoxReference(app_id=0 name=b''), #also tried with a app id 0 & actual box name
+            BoxReference(app_id=0, name=b''), 
         ],
         extra_fee=AlgoAmount(micro_algo=10_000),
         validity_window=1000
