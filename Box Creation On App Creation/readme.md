@@ -11,18 +11,18 @@ However, with the new protocol update, **this same logic can be easily replicate
 ## Replication
 1. Algokit & Algokit Utils must be available globally
 2. If contract changes are made, use the one-liner in compile_commands.txt
-3. Although a .env is available, feel free to generate a new private & public key pair using `0_generate_account.py` & fund the account via https://bank.testnet.algorand.network/
+3. Although a .env is available, feel free to generate a new private & public key pair using ```0_generate_account.py``` & fund the account via https://bank.testnet.algorand.network/
 4. Run 1_deploy.py
 
-`deploy.py` does the following:
+```deploy.py``` does the following:
 
-- Loads our .env and prepares a signing account from `sk` and `pk` env variables
+- Loads our .env and prepares a signing account from ```sk``` and ```pk``` env variables
 - Declares the Child Template Factory & Parent Factory 
 - Deploys the Child Template App from the child tempalte factory we will be creating via inner-transaction and creating a box in simultaneously at time of creation
 - Deploys the Parent Factory & simultaneously assigns the application ID from the now live child template into a global state of the parent factory
 - Funds the Parent Factory with Account Minimum Balance Requirement of 0.1 Algorand
 - Creates a Payment Transaction to our parent factory for the upcoming application call (this is rerouted to the created child application, whose approval & clear programs are derived from the global state)
-- Calls the `create_test_contract_child_and_box` method on the parent factory, which accepts the aforementioned payment and uses those funds for the MBR increases resulting from: creating the child application & funding the account MBR & Box MBR of the child application (excess is refunded to the parent factory). Then, the parent factory submits an inner abi call to the newly created child application's `create_box` method— this initializes the empty box with a box name of choice, and refunds any excess MBR, returning the amount of MBR used to the parent factory. The parent factory calculates the total MBR used, and refunds this to the initial sender of the MBR payment included in the `create_test_contract_child_and_box` method.
+- Calls the ```create_test_contract_child_and_box``` method on the parent factory, which accepts the aforementioned payment and uses those funds for the MBR increases resulting from: creating the child application & funding the account MBR & Box MBR of the child application (excess is refunded to the parent factory). Then, the parent factory submits an inner abi call to the newly created child application's ```create_box``` method— this initializes the empty box with a box name of choice, and refunds any excess MBR, returning the amount of MBR used to the parent factory. The parent factory calculates the total MBR used, and refunds this to the initial sender of the MBR payment included in the ```create_test_contract_child_and_box``` method.
 
 ## Example Transaction:
 https://lora.algokit.io/testnet/transaction/YIMHVBFPFNBGWMYMHC4VWZO57FNXZXVOMCXLIY7LFAJSST5QV7ZQ
@@ -30,7 +30,7 @@ https://lora.algokit.io/testnet/transaction/YIMHVBFPFNBGWMYMHC4VWZO57FNXZXVOMCXL
 
 ## Additional Information
 
-The code for `get_application_address` mentioned previously for the *guessing* trick.
+The code for ```get_application_address``` mentioned previously for the *guessing* trick.
 
 ```
 
