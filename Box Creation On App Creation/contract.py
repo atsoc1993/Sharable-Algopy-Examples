@@ -56,7 +56,7 @@ class TestFactory(ARC4Contract):
 
         fund_account_mbr_before_method_is_called = itxn.Payment(
             receiver=create_child_tx.created_app.address,
-            amount=100_000
+            amount=Global.min_balance
         ).submit()
 
         inner_mbr_payment = itxn.Payment(
@@ -71,7 +71,8 @@ class TestFactory(ARC4Contract):
         )
 
         post_mbr = get_mbr()
-        mbr_diff = excess_mbr_returned + (post_mbr - pre_mbr)
+        mbr_diff = mbr_payment.amount - fund_account_mbr_before_method_is_called.amount - Global.min_balance - (post_mbr - pre_mbr)
+        mbr_diff += excess_mbr_returned
         itxn.Payment(
             receiver=Txn.sender,
             amount=mbr_diff

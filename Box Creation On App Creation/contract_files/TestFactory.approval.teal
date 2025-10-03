@@ -3,7 +3,7 @@
 
 // contract.TestFactory.__algopy_entrypoint_with_init() -> uint64:
 main:
-    intcblock 1 0 5 6 100000
+    intcblock 1 0 5 6
     bytecblock "test_contract_child"
     txn ApplicationID
     bnz main_after_if_else@2
@@ -29,7 +29,7 @@ main_after_if_else@9:
     return
 
 main_create_test_contract_child_call_do_something_else_route@8:
-    // contract.py:80
+    // contract.py:81
     // @abimethod
     txn OnCompletion
     !
@@ -46,7 +46,7 @@ main_create_test_contract_child_call_do_something_else_route@8:
     intc_0 // pay
     ==
     assert // transaction type is pay
-    // contract.py:80
+    // contract.py:81
     // @abimethod
     callsub create_test_contract_child_call_do_something_else
     intc_0 // 1
@@ -135,6 +135,7 @@ create_test_contract_child_and_box:
     // assert mbr_payment.amount >= 1_000_000
     frame_dig -1
     gtxns Amount
+    dup
     pushint 1000000 // 1000000
     >=
     assert
@@ -193,7 +194,7 @@ create_test_contract_child_and_box:
     // contract.py:57-60
     // fund_account_mbr_before_method_is_called = itxn.Payment(
     //     receiver=create_child_tx.created_app.address,
-    //     amount=100_000
+    //     amount=Global.min_balance
     // ).submit()
     itxn_begin
     // contract.py:58
@@ -202,8 +203,8 @@ create_test_contract_child_and_box:
     app_params_get AppAddress
     assert // application exists
     // contract.py:59
-    // amount=100_000
-    intc 4 // 100000
+    // amount=Global.min_balance
+    global MinBalance
     itxn_field Amount
     itxn_field Receiver
     // contract.py:57
@@ -215,12 +216,13 @@ create_test_contract_child_and_box:
     // contract.py:57-60
     // fund_account_mbr_before_method_is_called = itxn.Payment(
     //     receiver=create_child_tx.created_app.address,
-    //     amount=100_000
+    //     amount=Global.min_balance
     // ).submit()
     itxn_submit
+    itxn Amount
     // contract.py:63
     // receiver=create_child_tx.created_app.address,
-    dup
+    dig 1
     app_params_get AppAddress
     assert // application exists
     // contract.py:67-71
@@ -232,7 +234,7 @@ create_test_contract_child_and_box:
     itxn_begin
     // contract.py:64
     // amount=100_000
-    intc 4 // 100000
+    pushint 100000 // 100000
     itxn_field Amount
     itxn_field Receiver
     // contract.py:62
@@ -248,6 +250,7 @@ create_test_contract_child_and_box:
     //     app_id=create_child_tx.created_app.id
     // )
     itxn_next
+    swap
     itxn_field ApplicationID
     pushbytes 0x90fafbe8 // method "create_box(pay)uint64"
     itxn_field ApplicationArgs
@@ -271,28 +274,37 @@ create_test_contract_child_and_box:
     acct_params_get AcctMinBalance
     assert // account funded
     // contract.py:74
-    // mbr_diff = excess_mbr_returned + (post_mbr - pre_mbr)
-    uncover 2
+    // mbr_diff = mbr_payment.amount - fund_account_mbr_before_method_is_called.amount - Global.min_balance - (post_mbr - pre_mbr)
+    uncover 4
+    uncover 3
     -
+    global MinBalance
+    -
+    swap
+    uncover 3
+    -
+    -
+    // contract.py:75
+    // mbr_diff += excess_mbr_returned
     +
-    // contract.py:75-78
+    // contract.py:76-79
     // itxn.Payment(
     //     receiver=Txn.sender,
     //     amount=mbr_diff
     // ).submit()
     itxn_begin
-    // contract.py:76
+    // contract.py:77
     // receiver=Txn.sender,
     txn Sender
     itxn_field Receiver
     itxn_field Amount
-    // contract.py:75
+    // contract.py:76
     // itxn.Payment(
     intc_0 // pay
     itxn_field TypeEnum
     intc_1 // 0
     itxn_field Fee
-    // contract.py:75-78
+    // contract.py:76-79
     // itxn.Payment(
     //     receiver=Txn.sender,
     //     amount=mbr_diff
@@ -303,7 +315,7 @@ create_test_contract_child_and_box:
 
 // contract.TestFactory.create_test_contract_child_call_do_something_else(mbr_payment: uint64) -> void:
 create_test_contract_child_call_do_something_else:
-    // contract.py:80-81
+    // contract.py:81-82
     // @abimethod
     // def create_test_contract_child_call_do_something_else(self, mbr_payment: gtxn.PaymentTransaction) -> None:
     proto 1 0
@@ -312,7 +324,7 @@ create_test_contract_child_call_do_something_else:
     global CurrentApplicationAddress
     acct_params_get AcctMinBalance
     assert // account funded
-    // contract.py:84-89
+    // contract.py:85-90
     // create_child_tx = itxn.ApplicationCall(
     //     approval_program=self.test_contract_child.approval_program,
     //     clear_state_program=self.test_contract_child.clear_state_program,
@@ -320,7 +332,7 @@ create_test_contract_child_call_do_something_else:
     //     global_num_uint=5,
     // ).submit()
     itxn_begin
-    // contract.py:85
+    // contract.py:86
     // approval_program=self.test_contract_child.approval_program,
     intc_1 // 0
     bytec_0 // "test_contract_child"
@@ -329,28 +341,28 @@ create_test_contract_child_call_do_something_else:
     dup
     app_params_get AppApprovalProgram
     assert // application exists
-    // contract.py:86
+    // contract.py:87
     // clear_state_program=self.test_contract_child.clear_state_program,
     swap
     app_params_get AppClearStateProgram
     assert // application exists
-    // contract.py:88
+    // contract.py:89
     // global_num_uint=5,
     intc_2 // 5
     itxn_field GlobalNumUint
-    // contract.py:87
+    // contract.py:88
     // global_num_bytes=5,
     intc_2 // 5
     itxn_field GlobalNumByteSlice
     itxn_field ClearStateProgramPages
     itxn_field ApprovalProgramPages
-    // contract.py:84
+    // contract.py:85
     // create_child_tx = itxn.ApplicationCall(
     intc_3 // appl
     itxn_field TypeEnum
     intc_1 // 0
     itxn_field Fee
-    // contract.py:84-89
+    // contract.py:85-90
     // create_child_tx = itxn.ApplicationCall(
     //     approval_program=self.test_contract_child.approval_program,
     //     clear_state_program=self.test_contract_child.clear_state_program,
@@ -359,7 +371,7 @@ create_test_contract_child_call_do_something_else:
     // ).submit()
     itxn_submit
     itxn CreatedApplicationID
-    // contract.py:92-95
+    // contract.py:93-96
     // abi_call(
     //     TestChild.do_something_else_without_boxes,
     //     app_id=create_child_tx.created_app.id
@@ -378,7 +390,7 @@ create_test_contract_child_call_do_something_else:
     global CurrentApplicationAddress
     acct_params_get AcctMinBalance
     assert // account funded
-    // contract.py:98
+    // contract.py:99
     // mbr_diff = mbr_payment.amount - (post_mbr - pre_mbr)
     frame_dig -1
     gtxns Amount
@@ -386,24 +398,24 @@ create_test_contract_child_call_do_something_else:
     uncover 2
     -
     -
-    // contract.py:99-102
+    // contract.py:100-103
     // itxn.Payment(
     //     receiver=Txn.sender,
     //     amount=mbr_diff
     // ).submit()
     itxn_begin
-    // contract.py:100
+    // contract.py:101
     // receiver=Txn.sender,
     txn Sender
     itxn_field Receiver
     itxn_field Amount
-    // contract.py:99
+    // contract.py:100
     // itxn.Payment(
     intc_0 // pay
     itxn_field TypeEnum
     intc_1 // 0
     itxn_field Fee
-    // contract.py:99-102
+    // contract.py:100-103
     // itxn.Payment(
     //     receiver=Txn.sender,
     //     amount=mbr_diff
