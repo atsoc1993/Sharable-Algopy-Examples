@@ -29,15 +29,15 @@ test_contract_child_factory =  TestChildFactory(
     default_signer=test_account.signer,
 )
 
-print(f'Deploying Child Contract Template . . .')
-test_contract_template_client, deploy_response = test_contract_child_factory.send.create.bare()
-print(f'Deployed Child Contract Template, App ID: {test_contract_template_client.app_id}')
-
 test_contract_factory_factory = TestFactoryFactory(
     algorand=algorand,
     default_sender=test_account.address,
     default_signer=test_account.signer,
 )
+print(f'Deploying Child Contract Template . . .')
+test_contract_template_client, deploy_response = test_contract_child_factory.send.create.bare()
+print(f'Deployed Child Contract Template, App ID: {test_contract_template_client.app_id}')
+
 
 # Not recommended to use Deploy if global states change on creation when testing but the approval program and schema of the contract does not
 print(f'Deploying Factory and setting child app ID to global state . . .')
