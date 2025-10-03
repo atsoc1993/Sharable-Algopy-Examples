@@ -1,0 +1,8 @@
+algokit compile py contract.py --output-arc56
+algokitgen-py -a 'TestChild.arc56.json' -o 'TestChildClient.py'
+algokitgen-py -a 'TestFactory.arc56.json' -o 'TestFactoryClient.py'
+
+algokit compile py contract.py --output-arc56; algokitgen-py -a 'TestChild.arc56.json' -o 'TestChildClient.py'; algokitgen-py -a 'TestFactory.arc56.json' -o 'TestFactoryClient.py'
+
+One-liner:
+algokit compile py contract.py --output-arc56; algokitgen-py -a 'TestChild.arc56.json' -o 'TestChildClient.py'; algokitgen-py -a 'TestFactory.arc56.json' -o 'TestFactoryClient.py'

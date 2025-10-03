@@ -1,0 +1,120 @@
+#pragma version 10
+#pragma typetrack false
+
+// contract.TestChild.__algopy_entrypoint_with_init() -> uint64:
+main:
+    intcblock 1 0
+    // contract.py:107
+    // class TestChild(ARC4Contract):
+    txn NumAppArgs
+    bz main_bare_routing@8
+    pushbytess 0x50dc3a0e 0x90fafbe8 0x86de96f1 // method "update_or_delete()void", method "create_box(pay)uint64", method "do_something_else_without_boxes()void"
+    txna ApplicationArgs 0
+    match main_update_or_delete_route@5 main_create_box_route@6 main_do_something_else_without_boxes_route@7
+
+main_after_if_else@10:
+    // contract.py:107
+    // class TestChild(ARC4Contract):
+    intc_1 // 0
+    return
+
+main_do_something_else_without_boxes_route@7:
+    // contract.py:136
+    // @abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    intc_0 // 1
+    return
+
+main_create_box_route@6:
+    // contract.py:115
+    // @abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // contract.py:107
+    // class TestChild(ARC4Contract):
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_0 // pay
+    ==
+    assert // transaction type is pay
+    // contract.py:115
+    // @abimethod
+    callsub create_box
+    itob
+    pushbytes 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_update_or_delete_route@5:
+    // contract.py:111
+    // @abimethod(allow_actions=['UpdateApplication', 'DeleteApplication'])
+    intc_0 // 1
+    txn OnCompletion
+    shl
+    pushint 48 // 48
+    &
+    assert // OnCompletion is not one of UpdateApplication, DeleteApplication
+    txn ApplicationID
+    assert // can only call when not creating
+    intc_0 // 1
+    return
+
+main_bare_routing@8:
+    // contract.py:107
+    // class TestChild(ARC4Contract):
+    txn OnCompletion
+    bnz main_after_if_else@10
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    intc_0 // 1
+    return
+
+
+// contract.TestChild.create_box(mbr_payment: uint64) -> uint64:
+create_box:
+    // contract.py:115-116
+    // @abimethod
+    // def create_box(self, mbr_payment: gtxn.PaymentTransaction) -> UInt64:
+    proto 1 1
+    // contract.py:7
+    // return Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    bury 1
+    assert // account funded
+    // contract.py:118
+    // if Global.current_application_address.balance == 0:
+    global CurrentApplicationAddress
+    acct_params_get AcctBalance
+    bury 1
+    assert // account funded
+    // contract.py:121
+    // self.test_box[arc4.UInt64(0)] = arc4.UInt64(0)
+    pushbytes 0x0000000000000000
+    dup
+    box_put
+    // contract.py:7
+    // return Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    bury 1
+    assert // account funded
+    // contract.py:134-135
+    // # return excess_mbr
+    // return UInt64(0)
+    intc_1 // 0
+    retsub

@@ -1,0 +1,395 @@
+#pragma version 10
+#pragma typetrack false
+
+// contract.TestFactory.__algopy_entrypoint_with_init() -> uint64:
+main:
+    intcblock 1 0 5 6 100000
+    bytecblock "test_contract_child"
+    txn ApplicationID
+    bnz main_after_if_else@2
+    // contract.py:33
+    // self.test_contract_child = Application()
+    bytec_0 // "test_contract_child"
+    intc_1 // 0
+    app_global_put
+    // contract.py:34
+    // self.force_schema_break_7 = UInt64(0)
+    pushbytes "force_schema_break_7"
+    intc_1 // 0
+    app_global_put
+
+main_after_if_else@2:
+    // contract.py:31
+    // class TestFactory(ARC4Contract):
+    txn NumAppArgs
+    bz main_bare_routing@9
+    pushbytess 0x50dc3a0e 0xfa19bc45 0xbb6dfcbd 0xddf77262 // method "update_or_delete()void", method "set_test_contract_child(application)void", method "create_test_contract_child_and_box(pay)void", method "create_test_contract_child_call_do_something_else(pay)void"
+    txna ApplicationArgs 0
+    match main_update_or_delete_route@5 main_set_test_contract_child_route@6 main_create_test_contract_child_and_box_route@7 main_create_test_contract_child_call_do_something_else_route@8
+
+main_after_if_else@11:
+    // contract.py:31
+    // class TestFactory(ARC4Contract):
+    intc_1 // 0
+    return
+
+main_create_test_contract_child_call_do_something_else_route@8:
+    // contract.py:83
+    // @abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // contract.py:31
+    // class TestFactory(ARC4Contract):
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_0 // pay
+    ==
+    assert // transaction type is pay
+    // contract.py:83
+    // @abimethod
+    callsub create_test_contract_child_call_do_something_else
+    intc_0 // 1
+    return
+
+main_create_test_contract_child_and_box_route@7:
+    // contract.py:45
+    // @abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // contract.py:31
+    // class TestFactory(ARC4Contract):
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_0 // pay
+    ==
+    assert // transaction type is pay
+    // contract.py:45
+    // @abimethod
+    callsub create_test_contract_child_and_box
+    intc_0 // 1
+    return
+
+main_set_test_contract_child_route@6:
+    // contract.py:40-41
+    // # @abimethod(create='require') Removing require because .deploy method on factories is broken...
+    // @abimethod
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // contract.py:31
+    // class TestFactory(ARC4Contract):
+    txna ApplicationArgs 1
+    btoi
+    txnas Applications
+    // contract.py:40-41
+    // # @abimethod(create='require') Removing require because .deploy method on factories is broken...
+    // @abimethod
+    callsub set_test_contract_child
+    intc_0 // 1
+    return
+
+main_update_or_delete_route@5:
+    // contract.py:36
+    // @abimethod(allow_actions=['UpdateApplication', 'DeleteApplication'])
+    intc_0 // 1
+    txn OnCompletion
+    shl
+    pushint 48 // 48
+    &
+    assert // OnCompletion is not one of UpdateApplication, DeleteApplication
+    txn ApplicationID
+    assert // can only call when not creating
+    intc_0 // 1
+    return
+
+main_bare_routing@9:
+    // contract.py:31
+    // class TestFactory(ARC4Contract):
+    txn OnCompletion
+    bnz main_after_if_else@11
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    intc_0 // 1
+    return
+
+
+// contract.TestFactory.set_test_contract_child(test_contract_child_app: uint64) -> void:
+set_test_contract_child:
+    // contract.py:40-42
+    // # @abimethod(create='require') Removing require because .deploy method on factories is broken...
+    // @abimethod
+    // def set_test_contract_child(self, test_contract_child_app: Application) -> None:
+    proto 1 0
+    // contract.py:43
+    // self.test_contract_child = test_contract_child_app
+    bytec_0 // "test_contract_child"
+    frame_dig -1
+    app_global_put
+    retsub
+
+
+// contract.TestFactory.create_test_contract_child_and_box(mbr_payment: uint64) -> void:
+create_test_contract_child_and_box:
+    // contract.py:45-46
+    // @abimethod
+    // def create_test_contract_child_and_box(self, mbr_payment: gtxn.PaymentTransaction) -> None:
+    proto 1 0
+    // contract.py:47
+    // assert mbr_payment.amount >= 1_000_000
+    frame_dig -1
+    gtxns Amount
+    pushint 1000000 // 1000000
+    >=
+    assert
+    // contract.py:7
+    // return Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    bury 1
+    assert // account funded
+    // contract.py:51-56
+    // create_child_tx = itxn.ApplicationCall(
+    //     approval_program=self.test_contract_child.approval_program,
+    //     clear_state_program=self.test_contract_child.clear_state_program,
+    //     global_num_bytes=5,
+    //     global_num_uint=5,
+    // ).submit()
+    itxn_begin
+    // contract.py:52
+    // approval_program=self.test_contract_child.approval_program,
+    intc_1 // 0
+    bytec_0 // "test_contract_child"
+    app_global_get_ex
+    assert // check self.test_contract_child exists
+    dup
+    app_params_get AppApprovalProgram
+    assert // application exists
+    // contract.py:53
+    // clear_state_program=self.test_contract_child.clear_state_program,
+    swap
+    app_params_get AppClearStateProgram
+    assert // application exists
+    // contract.py:55
+    // global_num_uint=5,
+    intc_2 // 5
+    itxn_field GlobalNumUint
+    // contract.py:54
+    // global_num_bytes=5,
+    intc_2 // 5
+    itxn_field GlobalNumByteSlice
+    itxn_field ClearStateProgramPages
+    itxn_field ApprovalProgramPages
+    // contract.py:51
+    // create_child_tx = itxn.ApplicationCall(
+    intc_3 // appl
+    itxn_field TypeEnum
+    intc_1 // 0
+    itxn_field Fee
+    // contract.py:51-56
+    // create_child_tx = itxn.ApplicationCall(
+    //     approval_program=self.test_contract_child.approval_program,
+    //     clear_state_program=self.test_contract_child.clear_state_program,
+    //     global_num_bytes=5,
+    //     global_num_uint=5,
+    // ).submit()
+    itxn_submit
+    itxn ApplicationID
+    itxn CreatedApplicationID
+    // contract.py:59-62
+    // fund_account_mbr_before_method_is_called = itxn.Payment(
+    //     receiver=create_child_tx.app_id.address,
+    //     amount=100_000
+    // ).submit()
+    itxn_begin
+    // contract.py:60
+    // receiver=create_child_tx.app_id.address,
+    dig 1
+    app_params_get AppAddress
+    assert // application exists
+    // contract.py:61
+    // amount=100_000
+    intc 4 // 100000
+    itxn_field Amount
+    itxn_field Receiver
+    // contract.py:59
+    // fund_account_mbr_before_method_is_called = itxn.Payment(
+    intc_0 // pay
+    itxn_field TypeEnum
+    intc_1 // 0
+    itxn_field Fee
+    // contract.py:59-62
+    // fund_account_mbr_before_method_is_called = itxn.Payment(
+    //     receiver=create_child_tx.app_id.address,
+    //     amount=100_000
+    // ).submit()
+    itxn_submit
+    // contract.py:65
+    // receiver=create_child_tx.app_id.address,
+    swap
+    app_params_get AppAddress
+    assert // application exists
+    // contract.py:69-73
+    // excess_mbr_returned, txn = abi_call(
+    //     TestChild.create_box,
+    //     inner_mbr_payment,
+    //     app_id=create_child_tx.created_app.id
+    // )
+    itxn_begin
+    // contract.py:66
+    // amount=100_000
+    intc 4 // 100000
+    itxn_field Amount
+    itxn_field Receiver
+    // contract.py:64
+    // inner_mbr_payment = itxn.Payment(
+    intc_0 // pay
+    itxn_field TypeEnum
+    intc_1 // 0
+    itxn_field Fee
+    // contract.py:69-73
+    // excess_mbr_returned, txn = abi_call(
+    //     TestChild.create_box,
+    //     inner_mbr_payment,
+    //     app_id=create_child_tx.created_app.id
+    // )
+    itxn_next
+    itxn_field ApplicationID
+    pushbytes 0x90fafbe8 // method "create_box(pay)uint64"
+    itxn_field ApplicationArgs
+    intc_3 // appl
+    itxn_field TypeEnum
+    intc_1 // 0
+    itxn_field Fee
+    itxn_submit
+    gitxn 1 LastLog
+    extract 0 4
+    pushbytes 0x151f7c75
+    ==
+    assert // application log value is not the result of an ABI return
+    retsub
+
+
+// contract.TestFactory.create_test_contract_child_call_do_something_else(mbr_payment: uint64) -> void:
+create_test_contract_child_call_do_something_else:
+    // contract.py:83-84
+    // @abimethod
+    // def create_test_contract_child_call_do_something_else(self, mbr_payment: gtxn.PaymentTransaction) -> None:
+    proto 1 0
+    // contract.py:7
+    // return Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // contract.py:87-92
+    // create_child_tx = itxn.ApplicationCall(
+    //     approval_program=self.test_contract_child.approval_program,
+    //     clear_state_program=self.test_contract_child.clear_state_program,
+    //     global_num_bytes=5,
+    //     global_num_uint=5,
+    // ).submit()
+    itxn_begin
+    // contract.py:88
+    // approval_program=self.test_contract_child.approval_program,
+    intc_1 // 0
+    bytec_0 // "test_contract_child"
+    app_global_get_ex
+    assert // check self.test_contract_child exists
+    dup
+    app_params_get AppApprovalProgram
+    assert // application exists
+    // contract.py:89
+    // clear_state_program=self.test_contract_child.clear_state_program,
+    swap
+    app_params_get AppClearStateProgram
+    assert // application exists
+    // contract.py:91
+    // global_num_uint=5,
+    intc_2 // 5
+    itxn_field GlobalNumUint
+    // contract.py:90
+    // global_num_bytes=5,
+    intc_2 // 5
+    itxn_field GlobalNumByteSlice
+    itxn_field ClearStateProgramPages
+    itxn_field ApprovalProgramPages
+    // contract.py:87
+    // create_child_tx = itxn.ApplicationCall(
+    intc_3 // appl
+    itxn_field TypeEnum
+    intc_1 // 0
+    itxn_field Fee
+    // contract.py:87-92
+    // create_child_tx = itxn.ApplicationCall(
+    //     approval_program=self.test_contract_child.approval_program,
+    //     clear_state_program=self.test_contract_child.clear_state_program,
+    //     global_num_bytes=5,
+    //     global_num_uint=5,
+    // ).submit()
+    itxn_submit
+    itxn CreatedApplicationID
+    // contract.py:95-98
+    // abi_call(
+    //     TestChild.do_something_else_without_boxes,
+    //     app_id=create_child_tx.created_app.id
+    // )
+    itxn_begin
+    itxn_field ApplicationID
+    pushbytes 0x86de96f1 // method "do_something_else_without_boxes()void"
+    itxn_field ApplicationArgs
+    intc_3 // appl
+    itxn_field TypeEnum
+    intc_1 // 0
+    itxn_field Fee
+    itxn_submit
+    // contract.py:7
+    // return Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // contract.py:101
+    // mbr_diff = mbr_payment.amount - (post_mbr - pre_mbr)
+    frame_dig -1
+    gtxns Amount
+    swap
+    uncover 2
+    -
+    -
+    // contract.py:102-105
+    // itxn.Payment(
+    //     receiver=Txn.sender,
+    //     amount=mbr_diff
+    // ).submit()
+    itxn_begin
+    // contract.py:103
+    // receiver=Txn.sender,
+    txn Sender
+    itxn_field Receiver
+    itxn_field Amount
+    // contract.py:102
+    // itxn.Payment(
+    intc_0 // pay
+    itxn_field TypeEnum
+    intc_1 // 0
+    itxn_field Fee
+    // contract.py:102-105
+    // itxn.Payment(
+    //     receiver=Txn.sender,
+    //     amount=mbr_diff
+    // ).submit()
+    itxn_submit
+    retsub

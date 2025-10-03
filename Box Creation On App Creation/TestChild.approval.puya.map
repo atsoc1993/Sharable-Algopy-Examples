@@ -1,0 +1,576 @@
+{
+  "version": 3,
+  "sources": [
+    "contract.py"
+  ],
+  "mappings": ";;;;;AA0GA;;AAAA;;;AAAA;;;;;;;;;;;;;;;;;AAAA;;;AAAA;;;;;;;;AAAA;;AA6BK;;AAAA;AAAA;AAAA;;AAAA;AAAA;;AArBA;;AAAA;AAAA;AAAA;;AAAA;AARL;;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAQK;;;AAAA;AAAA;;;;;;AAAA;AAAA;AAAA;AAAA;;AAJA;AAAA;;AAAA;AAAA;;AAAA;AAAA;AAAA;;AAAA;AAAA;;AAJL;;AAAA;;;;;;;;;AAQA;;;AA5GW;;AAAA;;AAAA;;AAAA;AA+GA;;AAAA;;AAAA;;AAAA;AAGW;;;;;;;;;;AAAkB;AAAhC;AAlHG;;AAAA;;AAAA;;AAAA;AAgII;AAAP",
+  "op_pc_offset": 0,
+  "pc_events": {
+    "1": {
+      "subroutine": "contract.TestChild.__algopy_entrypoint_with_init",
+      "params": {},
+      "block": "main",
+      "stack_in": [],
+      "op": "intcblock 1 0"
+    },
+    "5": {
+      "op": "txn NumAppArgs",
+      "defined_out": [
+        "tmp%0#2"
+      ],
+      "stack_out": [
+        "tmp%0#2"
+      ]
+    },
+    "7": {
+      "op": "bz main_bare_routing@8",
+      "stack_out": []
+    },
+    "10": {
+      "op": "pushbytess 0x50dc3a0e 0x90fafbe8 0x86de96f1 // method \"update_or_delete()void\", method \"create_box(pay)uint64\", method \"do_something_else_without_boxes()void\"",
+      "defined_out": [
+        "Method(create_box(pay)uint64)",
+        "Method(do_something_else_without_boxes()void)",
+        "Method(update_or_delete()void)"
+      ],
+      "stack_out": [
+        "Method(update_or_delete()void)",
+        "Method(create_box(pay)uint64)",
+        "Method(do_something_else_without_boxes()void)"
+      ]
+    },
+    "27": {
+      "op": "txna ApplicationArgs 0",
+      "defined_out": [
+        "Method(create_box(pay)uint64)",
+        "Method(do_something_else_without_boxes()void)",
+        "Method(update_or_delete()void)",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "Method(update_or_delete()void)",
+        "Method(create_box(pay)uint64)",
+        "Method(do_something_else_without_boxes()void)",
+        "tmp%2#0"
+      ]
+    },
+    "30": {
+      "op": "match main_update_or_delete_route@5 main_create_box_route@6 main_do_something_else_without_boxes_route@7",
+      "stack_out": []
+    },
+    "38": {
+      "block": "main_after_if_else@10",
+      "stack_in": [],
+      "op": "intc_1 // 0",
+      "defined_out": [
+        "tmp%0#1"
+      ],
+      "stack_out": [
+        "tmp%0#1"
+      ]
+    },
+    "39": {
+      "op": "return",
+      "stack_out": []
+    },
+    "40": {
+      "block": "main_do_something_else_without_boxes_route@7",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%14#0"
+      ],
+      "stack_out": [
+        "tmp%14#0"
+      ]
+    },
+    "42": {
+      "op": "!",
+      "defined_out": [
+        "tmp%15#0"
+      ],
+      "stack_out": [
+        "tmp%15#0"
+      ]
+    },
+    "43": {
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
+    },
+    "44": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%16#0"
+      ],
+      "stack_out": [
+        "tmp%16#0"
+      ]
+    },
+    "46": {
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
+      "stack_out": []
+    },
+    "47": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#1"
+      ],
+      "stack_out": [
+        "tmp%0#1"
+      ]
+    },
+    "48": {
+      "op": "return",
+      "stack_out": []
+    },
+    "49": {
+      "block": "main_create_box_route@6",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0"
+      ]
+    },
+    "51": {
+      "op": "!",
+      "defined_out": [
+        "tmp%9#0"
+      ],
+      "stack_out": [
+        "tmp%9#0"
+      ]
+    },
+    "52": {
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
+    },
+    "53": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%10#0"
+      ],
+      "stack_out": [
+        "tmp%10#0"
+      ]
+    },
+    "55": {
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
+      "stack_out": []
+    },
+    "56": {
+      "op": "txn GroupIndex",
+      "defined_out": [
+        "tmp%12#0"
+      ],
+      "stack_out": [
+        "tmp%12#0"
+      ]
+    },
+    "58": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "1",
+        "tmp%12#0"
+      ],
+      "stack_out": [
+        "tmp%12#0",
+        "1"
+      ]
+    },
+    "59": {
+      "op": "-",
+      "defined_out": [
+        "gtxn_idx%0#0"
+      ],
+      "stack_out": [
+        "gtxn_idx%0#0"
+      ]
+    },
+    "60": {
+      "op": "dup",
+      "defined_out": [
+        "gtxn_idx%0#0",
+        "gtxn_idx%0#0 (copy)"
+      ],
+      "stack_out": [
+        "gtxn_idx%0#0",
+        "gtxn_idx%0#0 (copy)"
+      ]
+    },
+    "61": {
+      "op": "gtxns TypeEnum",
+      "defined_out": [
+        "gtxn_idx%0#0",
+        "gtxn_type%0#0"
+      ],
+      "stack_out": [
+        "gtxn_idx%0#0",
+        "gtxn_type%0#0"
+      ]
+    },
+    "63": {
+      "op": "intc_0 // pay",
+      "defined_out": [
+        "gtxn_idx%0#0",
+        "gtxn_type%0#0",
+        "pay"
+      ],
+      "stack_out": [
+        "gtxn_idx%0#0",
+        "gtxn_type%0#0",
+        "pay"
+      ]
+    },
+    "64": {
+      "op": "==",
+      "defined_out": [
+        "gtxn_idx%0#0",
+        "gtxn_type_matches%0#0"
+      ],
+      "stack_out": [
+        "gtxn_idx%0#0",
+        "gtxn_type_matches%0#0"
+      ]
+    },
+    "65": {
+      "error": "transaction type is pay",
+      "op": "assert // transaction type is pay",
+      "stack_out": [
+        "gtxn_idx%0#0"
+      ]
+    },
+    "66": {
+      "callsub": "contract.TestChild.create_box",
+      "op": "callsub create_box",
+      "defined_out": [
+        "to_encode%0#0"
+      ],
+      "stack_out": [
+        "to_encode%0#0"
+      ]
+    },
+    "69": {
+      "op": "itob",
+      "defined_out": [
+        "val_as_bytes%0#0"
+      ],
+      "stack_out": [
+        "val_as_bytes%0#0"
+      ]
+    },
+    "70": {
+      "op": "pushbytes 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "val_as_bytes%0#0"
+      ],
+      "stack_out": [
+        "val_as_bytes%0#0",
+        "0x151f7c75"
+      ]
+    },
+    "76": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "val_as_bytes%0#0"
+      ]
+    },
+    "77": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%13#0"
+      ],
+      "stack_out": [
+        "tmp%13#0"
+      ]
+    },
+    "78": {
+      "op": "log",
+      "stack_out": []
+    },
+    "79": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#1"
+      ],
+      "stack_out": [
+        "tmp%0#1"
+      ]
+    },
+    "80": {
+      "op": "return",
+      "stack_out": []
+    },
+    "81": {
+      "block": "main_update_or_delete_route@5",
+      "stack_in": [],
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "1"
+      ],
+      "stack_out": [
+        "1"
+      ]
+    },
+    "82": {
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "1",
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "1",
+        "tmp%3#0"
+      ]
+    },
+    "84": {
+      "op": "shl",
+      "defined_out": [
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "tmp%4#0"
+      ]
+    },
+    "85": {
+      "op": "pushint 48 // 48",
+      "defined_out": [
+        "48",
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "tmp%4#0",
+        "48"
+      ]
+    },
+    "87": {
+      "op": "&",
+      "defined_out": [
+        "tmp%5#0"
+      ],
+      "stack_out": [
+        "tmp%5#0"
+      ]
+    },
+    "88": {
+      "error": "OnCompletion is not one of UpdateApplication, DeleteApplication",
+      "op": "assert // OnCompletion is not one of UpdateApplication, DeleteApplication",
+      "stack_out": []
+    },
+    "89": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%6#0"
+      ],
+      "stack_out": [
+        "tmp%6#0"
+      ]
+    },
+    "91": {
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
+      "stack_out": []
+    },
+    "92": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#1"
+      ],
+      "stack_out": [
+        "tmp%0#1"
+      ]
+    },
+    "93": {
+      "op": "return",
+      "stack_out": []
+    },
+    "94": {
+      "block": "main_bare_routing@8",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%18#0"
+      ],
+      "stack_out": [
+        "tmp%18#0"
+      ]
+    },
+    "96": {
+      "op": "bnz main_after_if_else@10",
+      "stack_out": []
+    },
+    "99": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%19#0"
+      ],
+      "stack_out": [
+        "tmp%19#0"
+      ]
+    },
+    "101": {
+      "op": "!",
+      "defined_out": [
+        "tmp%20#0"
+      ],
+      "stack_out": [
+        "tmp%20#0"
+      ]
+    },
+    "102": {
+      "error": "can only call when creating",
+      "op": "assert // can only call when creating",
+      "stack_out": []
+    },
+    "103": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#1"
+      ],
+      "stack_out": [
+        "tmp%0#1"
+      ]
+    },
+    "104": {
+      "op": "return",
+      "stack_out": []
+    },
+    "105": {
+      "subroutine": "contract.TestChild.create_box",
+      "params": {
+        "mbr_payment#0": "uint64"
+      },
+      "block": "create_box",
+      "stack_in": [],
+      "op": "proto 1 1"
+    },
+    "108": {
+      "op": "global CurrentApplicationAddress",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "110": {
+      "op": "acct_params_get AcctMinBalance",
+      "defined_out": [
+        "check%0#0",
+        "pre_mbr#0"
+      ],
+      "stack_out": [
+        "pre_mbr#0",
+        "check%0#0"
+      ]
+    },
+    "112": {
+      "op": "bury 1",
+      "stack_out": [
+        "check%0#0"
+      ]
+    },
+    "114": {
+      "error": "account funded",
+      "op": "assert // account funded",
+      "stack_out": []
+    },
+    "115": {
+      "op": "global CurrentApplicationAddress",
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "117": {
+      "op": "acct_params_get AcctBalance",
+      "defined_out": [
+        "check%0#0",
+        "value%0#0"
+      ],
+      "stack_out": [
+        "value%0#0",
+        "check%0#0"
+      ]
+    },
+    "119": {
+      "op": "bury 1",
+      "stack_out": [
+        "check%0#0"
+      ]
+    },
+    "121": {
+      "error": "account funded",
+      "op": "assert // account funded",
+      "stack_out": []
+    },
+    "122": {
+      "op": "pushbytes 0x0000000000000000",
+      "defined_out": [
+        "0x0000000000000000"
+      ],
+      "stack_out": [
+        "0x0000000000000000"
+      ]
+    },
+    "132": {
+      "op": "dup",
+      "stack_out": [
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ]
+    },
+    "133": {
+      "op": "box_put",
+      "stack_out": []
+    },
+    "134": {
+      "op": "global CurrentApplicationAddress",
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "136": {
+      "op": "acct_params_get AcctMinBalance",
+      "defined_out": [
+        "check%0#0",
+        "post_mbr#0"
+      ],
+      "stack_out": [
+        "post_mbr#0",
+        "check%0#0"
+      ]
+    },
+    "138": {
+      "op": "bury 1",
+      "stack_out": [
+        "check%0#0"
+      ]
+    },
+    "140": {
+      "error": "account funded",
+      "op": "assert // account funded",
+      "stack_out": []
+    },
+    "141": {
+      "op": "intc_1 // 0",
+      "defined_out": [
+        "0"
+      ],
+      "stack_out": [
+        "0"
+      ]
+    },
+    "142": {
+      "retsub": true,
+      "op": "retsub"
+    }
+  }
+}
