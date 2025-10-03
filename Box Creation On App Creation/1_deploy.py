@@ -1,5 +1,11 @@
-from algokit_utils import AlgorandClient, SigningAccount, PaymentParams, AlgoAmount, CommonAppCallParams, OnUpdate, OnSchemaBreak, BoxReference
-from contract_files.TestFactoryClient import TestFactoryFactory, SetTestContractChildArgs, CreateTestContractChildAndBoxArgs, CreateTestContractChildCallDoSomethingElseArgs #, TestFactoryMethodCallCreateParams
+from algokit_utils import AlgorandClient, SigningAccount, PaymentParams, BoxIdentifier, AlgoAmount, CommonAppCallParams, OnUpdate, OnSchemaBreak, BoxReference
+from contract_files.TestFactoryClient import (
+    TestFactoryFactory, 
+    SetTestContractChildArgs, 
+    CreateTestContractChildAndBoxArgs, 
+    CreateTestContractChildCallDoSomethingElseArgs, 
+    TestFactoryMethodCallCreateParams,
+)
 from contract_files.TestChildClient import TestChildFactory
 from dotenv import load_dotenv
 import os
@@ -33,46 +39,35 @@ test_contract_factory_factory = TestFactoryFactory(
     default_signer=test_account.signer,
 )
 
-# Deploy always feels broken...
-# print(f'Deploying Factory and setting child app ID to global state . . .')
-# factory_client, factory_deploy_resonse = test_contract_factory_factory.deploy(
-#     on_update=OnUpdate.AppendApp,
-#     on_schema_break=OnSchemaBreak.AppendApp,
-#     create_params=TestFactoryMethodCallCreateParams(
-#         args=SetTestContractChildArgs(
-#             test_contract_child_app=test_contract_template_client.app_id
+# Not recommended to use Deploy if global states change on creation when testing but the approval program and schema of the contract does not
+print(f'Deploying Factory and setting child app ID to global state . . .')
+factory_client, factory_deploy_resonse = test_contract_factory_factory.deploy(
+    on_update=OnUpdate.AppendApp,
+    on_schema_break=OnSchemaBreak.AppendApp,
+    create_params=TestFactoryMethodCallCreateParams(
+        args=SetTestContractChildArgs(
+            test_contract_child_app=test_contract_template_client.app_id
 
-#         ),
-#         validity_window=1000,
+        ),
+        validity_window=1000,
+    ),
+)
+print(f'Deployed and Global State set, App ID: {factory_client.app_id}')
+
+
+# print(f'Creating Factory App without Deploy Method, removed `require` on set test contract child method')
+# factory_client, factory_deploy_response = test_contract_factory_factory.send.create.bare()
+
+# factory_client.send.set_test_contract_child(
+#     args=SetTestContractChildArgs(
+#         test_contract_child_app=test_contract_template_client.app_id,
 #     ),
+#     params=CommonAppCallParams(
+#         validity_window=1000
+#     )
 # )
 # print(f'Deployed and Global State set, App ID: {factory_client.app_id}')
 
-
-print(f'Creating Factory App without Deploy Method, removed `require` on set test contract child method')
-factory_client, factory_deploy_response = test_contract_factory_factory.send.create.bare()
-
-factory_client.send.set_test_contract_child(
-    args=SetTestContractChildArgs(
-        test_contract_child_app=test_contract_template_client.app_id,
-    ),
-    params=CommonAppCallParams(
-        validity_window=1000
-    )
-)
-
-
-print(f'Funding Account MBR for Template . . .')
-
-algorand.send.payment(
-    params=PaymentParams(
-        receiver=test_contract_template_client.app_address,
-        sender=test_account.address,
-        signer=test_account.signer,
-        amount=AlgoAmount(micro_algo=100_000),
-        validity_window=1000
-    )
-)
 
 print(f'Funding Account MBR for Factory . . .')
 algorand.send.payment(
@@ -87,7 +82,6 @@ algorand.send.payment(
 print(f'Funded Account MBR for Factory')
 
 print(f'Testing Child Contract Creation where a box is set at creation . . .')
-
 mbr_payment = algorand.create_transaction.payment(
     PaymentParams(
         sender=test_account.address,
@@ -99,20 +93,22 @@ mbr_payment = algorand.create_transaction.payment(
     )
 )
 
-txn_response = factory_client.send.create_test_contract_child_and_box(
+txn_response= factory_client.send.create_test_contract_child_and_box(
     args=CreateTestContractChildAndBoxArgs(
         mbr_payment=mbr_payment,
     ),
     params=CommonAppCallParams(
         app_references=[0, test_contract_template_client.app_id],
         box_references=[
-            BoxReference(app_id=0, name=(0).to_bytes(8, 'big'))
+            BoxReference(app_id=0 name=b''), #also tried with a app id 0 & actual box name
         ],
         extra_fee=AlgoAmount(micro_algo=10_000),
         validity_window=1000
-    ),
+    )
+
 )
 
+#Successful test for arbitrary inner app call
 # txn_response = factory_client.send.create_test_contract_child_call_do_something_else(
 #     args=CreateTestContractChildCallDoSomethingElseArgs(
 #         mbr_payment=mbr_payment

@@ -1,9 +1,9 @@
 {
   "version": 3,
   "sources": [
-    "contract.py"
+    "../contract.py"
   ],
-  "mappings": ";;;;;AA0GA;;AAAA;;;AAAA;;;;;;;;;;;;;;;;;AAAA;;;AAAA;;;;;;;;AAAA;;AA6BK;;AAAA;AAAA;AAAA;;AAAA;AAAA;;AArBA;;AAAA;AAAA;AAAA;;AAAA;AARL;;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AAQK;;;AAAA;AAAA;;;;;;AAAA;AAAA;AAAA;AAAA;;AAJA;AAAA;;AAAA;AAAA;;AAAA;AAAA;AAAA;;AAAA;AAAA;;AAJL;;AAAA;;;;;;;;;AAQA;;;AA5GW;;AAAA;;AAAA;;AAAA;AA+GA;;AAAA;;AAAA;;AAAA;AAGW;;;;;;;;;;AAAkB;AAAhC;AAlHG;;AAAA;;AAAA;;AAAA;AAgII;AAAP",
+  "mappings": ";;;;;AAuGA;;AAAA;;;AAAA;;;;;;;;;;;;;;;;;AAAA;;;AAAA;;;;;;;;AAAA;;AAgCK;;AAAA;AAAA;AAAA;;AAAA;AAAA;;AAvBA;;AAAA;AAAA;AAAA;;AAAA;AATL;;AAAA;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;AASK;;;AAAA;AAAA;;;;;;AAAA;AAAA;AAAA;AAAA;;AAJA;AAAA;;AAAA;AAAA;;AAAA;AAAA;AAAA;;AAAA;AAAA;;AALL;;AAAA;;;;;;;;;AASA;;;AA1GW;;AAAA;;AAAA;AA6GA;;AAAA;;AAAA;AAAX;;;AACsB;AAAV;;AAEkB;;;;;;;;;;AACD;AAArB;;AAjHG;;AAAA;;AAAA;AAwHU;;AAAA;;AAAsB;AAAA;;AAAA;AAAtB;AAEb;AACa;;;;;;;;AADb;;;AAAA;;;AAAA;AAKA;AAAA",
   "op_pc_offset": 0,
   "pc_events": {
     "1": {
@@ -473,102 +473,289 @@
       ]
     },
     "112": {
-      "op": "bury 1",
-      "stack_out": [
-        "check%0#0"
-      ]
-    },
-    "114": {
       "error": "account funded",
       "op": "assert // account funded",
-      "stack_out": []
+      "stack_out": [
+        "pre_mbr#0"
+      ]
     },
-    "115": {
+    "113": {
       "op": "global CurrentApplicationAddress",
       "stack_out": [
+        "pre_mbr#0",
         "tmp%0#0"
       ]
     },
-    "117": {
+    "115": {
       "op": "acct_params_get AcctBalance",
       "defined_out": [
         "check%0#0",
+        "pre_mbr#0",
         "value%0#0"
       ],
       "stack_out": [
+        "pre_mbr#0",
         "value%0#0",
         "check%0#0"
       ]
     },
-    "119": {
-      "op": "bury 1",
+    "117": {
+      "error": "account funded",
+      "op": "assert // account funded",
       "stack_out": [
-        "check%0#0"
+        "pre_mbr#0",
+        "value%0#0"
+      ]
+    },
+    "118": {
+      "op": "bnz create_box_after_if_else@2",
+      "stack_out": [
+        "pre_mbr#0"
       ]
     },
     "121": {
-      "error": "account funded",
-      "op": "assert // account funded",
-      "stack_out": []
+      "op": "intc_1 // 0",
+      "stack_out": [
+        "pre_mbr#0",
+        "pre_mbr#0"
+      ]
     },
     "122": {
+      "op": "frame_bury 0",
+      "stack_out": [
+        "pre_mbr#0"
+      ]
+    },
+    "124": {
+      "block": "create_box_after_if_else@2",
+      "stack_in": [
+        "pre_mbr#0"
+      ],
       "op": "pushbytes 0x0000000000000000",
       "defined_out": [
         "0x0000000000000000"
       ],
       "stack_out": [
+        "pre_mbr#0",
         "0x0000000000000000"
       ]
-    },
-    "132": {
-      "op": "dup",
-      "stack_out": [
-        "0x0000000000000000",
-        "0x0000000000000000"
-      ]
-    },
-    "133": {
-      "op": "box_put",
-      "stack_out": []
     },
     "134": {
-      "op": "global CurrentApplicationAddress",
+      "op": "intc_1 // 0",
+      "defined_out": [
+        "0",
+        "0x0000000000000000"
+      ],
       "stack_out": [
-        "tmp%0#0"
+        "pre_mbr#0",
+        "0x0000000000000000",
+        "0"
+      ]
+    },
+    "135": {
+      "op": "box_create",
+      "defined_out": [
+        "{box_create}"
+      ],
+      "stack_out": [
+        "pre_mbr#0",
+        "{box_create}"
       ]
     },
     "136": {
+      "op": "pop",
+      "stack_out": [
+        "pre_mbr#0"
+      ]
+    },
+    "137": {
+      "op": "global CurrentApplicationAddress",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "pre_mbr#0",
+        "tmp%0#0"
+      ]
+    },
+    "139": {
       "op": "acct_params_get AcctMinBalance",
       "defined_out": [
         "check%0#0",
         "post_mbr#0"
       ],
       "stack_out": [
+        "pre_mbr#0",
         "post_mbr#0",
         "check%0#0"
       ]
     },
-    "138": {
-      "op": "bury 1",
-      "stack_out": [
-        "check%0#0"
-      ]
-    },
-    "140": {
+    "141": {
       "error": "account funded",
       "op": "assert // account funded",
-      "stack_out": []
-    },
-    "141": {
-      "op": "intc_1 // 0",
-      "defined_out": [
-        "0"
-      ],
       "stack_out": [
-        "0"
+        "pre_mbr#0",
+        "post_mbr#0"
       ]
     },
     "142": {
+      "op": "frame_dig -1",
+      "defined_out": [
+        "mbr_payment#0 (copy)",
+        "post_mbr#0"
+      ],
+      "stack_out": [
+        "pre_mbr#0",
+        "post_mbr#0",
+        "mbr_payment#0 (copy)"
+      ]
+    },
+    "144": {
+      "op": "gtxns Amount",
+      "defined_out": [
+        "post_mbr#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "pre_mbr#0",
+        "post_mbr#0",
+        "tmp%2#0"
+      ]
+    },
+    "146": {
+      "op": "swap",
+      "stack_out": [
+        "pre_mbr#0",
+        "tmp%2#0",
+        "post_mbr#0"
+      ]
+    },
+    "147": {
+      "op": "frame_dig 0",
+      "defined_out": [
+        "post_mbr#0",
+        "pre_mbr#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "pre_mbr#0",
+        "tmp%2#0",
+        "post_mbr#0",
+        "pre_mbr#0"
+      ]
+    },
+    "149": {
+      "op": "-",
+      "defined_out": [
+        "pre_mbr#0",
+        "tmp%2#0",
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "pre_mbr#0",
+        "tmp%2#0",
+        "tmp%3#0"
+      ]
+    },
+    "150": {
+      "op": "-",
+      "defined_out": [
+        "excess_mbr#0",
+        "pre_mbr#0"
+      ],
+      "stack_out": [
+        "pre_mbr#0",
+        "excess_mbr#0"
+      ]
+    },
+    "151": {
+      "op": "itxn_begin"
+    },
+    "152": {
+      "op": "txn Sender",
+      "defined_out": [
+        "excess_mbr#0",
+        "inner_txn_params%0%%param_Receiver_idx_0#0",
+        "pre_mbr#0"
+      ],
+      "stack_out": [
+        "pre_mbr#0",
+        "excess_mbr#0",
+        "inner_txn_params%0%%param_Receiver_idx_0#0"
+      ]
+    },
+    "154": {
+      "op": "dig 1",
+      "defined_out": [
+        "excess_mbr#0",
+        "excess_mbr#0 (copy)",
+        "inner_txn_params%0%%param_Receiver_idx_0#0",
+        "pre_mbr#0"
+      ],
+      "stack_out": [
+        "pre_mbr#0",
+        "excess_mbr#0",
+        "inner_txn_params%0%%param_Receiver_idx_0#0",
+        "excess_mbr#0 (copy)"
+      ]
+    },
+    "156": {
+      "op": "itxn_field Amount",
+      "stack_out": [
+        "pre_mbr#0",
+        "excess_mbr#0",
+        "inner_txn_params%0%%param_Receiver_idx_0#0"
+      ]
+    },
+    "158": {
+      "op": "itxn_field Receiver",
+      "stack_out": [
+        "pre_mbr#0",
+        "excess_mbr#0"
+      ]
+    },
+    "160": {
+      "op": "intc_0 // pay",
+      "defined_out": [
+        "excess_mbr#0",
+        "pay",
+        "pre_mbr#0"
+      ],
+      "stack_out": [
+        "pre_mbr#0",
+        "excess_mbr#0",
+        "pay"
+      ]
+    },
+    "161": {
+      "op": "itxn_field TypeEnum",
+      "stack_out": [
+        "pre_mbr#0",
+        "excess_mbr#0"
+      ]
+    },
+    "163": {
+      "op": "intc_1 // 0",
+      "stack_out": [
+        "pre_mbr#0",
+        "excess_mbr#0",
+        "0"
+      ]
+    },
+    "164": {
+      "op": "itxn_field Fee",
+      "stack_out": [
+        "pre_mbr#0",
+        "excess_mbr#0"
+      ]
+    },
+    "166": {
+      "op": "itxn_submit"
+    },
+    "167": {
+      "op": "swap"
+    },
+    "168": {
       "retsub": true,
       "op": "retsub"
     }

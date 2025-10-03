@@ -4,7 +4,7 @@
 // contract.TestChild.__algopy_entrypoint_with_init() -> uint64:
 main:
     intcblock 1 0
-    // contract.py:107
+    // contract.py:104
     // class TestChild(ARC4Contract):
     txn NumAppArgs
     bz main_bare_routing@8
@@ -13,7 +13,7 @@ main:
     match main_update_or_delete_route@5 main_create_box_route@6 main_do_something_else_without_boxes_route@7
 
 main_after_if_else@10:
-    // contract.py:107
+    // contract.py:104
     // class TestChild(ARC4Contract):
     intc_1 // 0
     return
@@ -30,14 +30,14 @@ main_do_something_else_without_boxes_route@7:
     return
 
 main_create_box_route@6:
-    // contract.py:115
+    // contract.py:113
     // @abimethod
     txn OnCompletion
     !
     assert // OnCompletion is not NoOp
     txn ApplicationID
     assert // can only call when not creating
-    // contract.py:107
+    // contract.py:104
     // class TestChild(ARC4Contract):
     txn GroupIndex
     intc_0 // 1
@@ -47,7 +47,7 @@ main_create_box_route@6:
     intc_0 // pay
     ==
     assert // transaction type is pay
-    // contract.py:115
+    // contract.py:113
     // @abimethod
     callsub create_box
     itob
@@ -59,7 +59,7 @@ main_create_box_route@6:
     return
 
 main_update_or_delete_route@5:
-    // contract.py:111
+    // contract.py:109
     // @abimethod(allow_actions=['UpdateApplication', 'DeleteApplication'])
     intc_0 // 1
     txn OnCompletion
@@ -73,7 +73,7 @@ main_update_or_delete_route@5:
     return
 
 main_bare_routing@8:
-    // contract.py:107
+    // contract.py:104
     // class TestChild(ARC4Contract):
     txn OnCompletion
     bnz main_after_if_else@10
@@ -86,7 +86,7 @@ main_bare_routing@8:
 
 // contract.TestChild.create_box(mbr_payment: uint64) -> uint64:
 create_box:
-    // contract.py:115-116
+    // contract.py:113-114
     // @abimethod
     // def create_box(self, mbr_payment: gtxn.PaymentTransaction) -> UInt64:
     proto 1 1
@@ -94,27 +94,65 @@ create_box:
     // return Global.current_application_address.min_balance
     global CurrentApplicationAddress
     acct_params_get AcctMinBalance
-    bury 1
     assert // account funded
-    // contract.py:118
+    // contract.py:116
     // if Global.current_application_address.balance == 0:
     global CurrentApplicationAddress
     acct_params_get AcctBalance
-    bury 1
     assert // account funded
-    // contract.py:121
-    // self.test_box[arc4.UInt64(0)] = arc4.UInt64(0)
+    bnz create_box_after_if_else@2
+    // contract.py:117
+    // pre_mbr = UInt64(0)
+    intc_1 // 0
+    frame_bury 0
+
+create_box_after_if_else@2:
+    // contract.py:119
+    // test_box = BoxRef(key=arc4.UInt64(0).bytes)
     pushbytes 0x0000000000000000
-    dup
-    box_put
+    // contract.py:120
+    // test_box.create(size=0)
+    intc_1 // 0
+    box_create
+    pop
     // contract.py:7
     // return Global.current_application_address.min_balance
     global CurrentApplicationAddress
     acct_params_get AcctMinBalance
-    bury 1
     assert // account funded
-    // contract.py:134-135
-    // # return excess_mbr
-    // return UInt64(0)
+    // contract.py:127
+    // excess_mbr = mbr_payment.amount - (post_mbr - pre_mbr)
+    frame_dig -1
+    gtxns Amount
+    swap
+    frame_dig 0
+    -
+    -
+    // contract.py:129-132
+    // itxn.Payment(
+    //     receiver=Txn.sender,
+    //     amount=excess_mbr
+    // ).submit()
+    itxn_begin
+    // contract.py:130
+    // receiver=Txn.sender,
+    txn Sender
+    dig 1
+    itxn_field Amount
+    itxn_field Receiver
+    // contract.py:129
+    // itxn.Payment(
+    intc_0 // pay
+    itxn_field TypeEnum
     intc_1 // 0
+    itxn_field Fee
+    // contract.py:129-132
+    // itxn.Payment(
+    //     receiver=Txn.sender,
+    //     amount=excess_mbr
+    // ).submit()
+    itxn_submit
+    // contract.py:134
+    // return excess_mbr
+    swap
     retsub

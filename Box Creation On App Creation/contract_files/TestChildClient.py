@@ -19,7 +19,7 @@ from algosdk.v2client.models import SimulateTraceConfig
 import algokit_utils
 from algokit_utils import AlgorandClient as _AlgoKitAlgorandClient
 
-_APP_SPEC_JSON = r"""{"arcs": [22, 28], "bareActions": {"call": [], "create": ["NoOp"]}, "methods": [{"actions": {"call": ["UpdateApplication", "DeleteApplication"], "create": []}, "args": [], "name": "update_or_delete", "returns": {"type": "void"}, "events": [], "readonly": false, "recommendations": {}}, {"actions": {"call": ["NoOp"], "create": []}, "args": [{"type": "pay", "name": "mbr_payment"}], "name": "create_box", "returns": {"type": "uint64"}, "events": [], "readonly": false, "recommendations": {}}, {"actions": {"call": ["NoOp"], "create": []}, "args": [], "name": "do_something_else_without_boxes", "returns": {"type": "void"}, "events": [], "readonly": false, "recommendations": {}}], "name": "TestChild", "state": {"keys": {"box": {}, "global": {}, "local": {}}, "maps": {"box": {"test_box": {"keyType": "uint64", "valueType": "uint64", "prefix": ""}}, "global": {}, "local": {}}, "schema": {"global": {"bytes": 0, "ints": 0}, "local": {"bytes": 0, "ints": 0}}}, "structs": {}, "byteCode": {"approval": "CiACAQAxG0EAVIIDBFDcOg4EkPr76ASG3pbxNhoAjgMAKwALAAIjQzEZFEQxGEQiQzEZFEQxGEQxFiIJSTgQIhJEiAAkFoAEFR98dUxQsCJDIjEZkIEwGkQxGEQiQzEZQP/DMRgURCJDigEBMgpzAUUBRDIKcwBFAUSACAAAAAAAAAAASb8yCnMBRQFEI4k=", "clear": "CoEBQw=="}, "compilerInfo": {"compiler": "puya", "compilerVersion": {"major": 4, "minor": 10, "patch": 0}}, "events": [], "networks": {}, "source": {"approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBjb250cmFjdC5UZXN0Q2hpbGQuX19hbGdvcHlfZW50cnlwb2ludF93aXRoX2luaXQoKSAtPiB1aW50NjQ6Cm1haW46CiAgICBpbnRjYmxvY2sgMSAwCiAgICAvLyBjb250cmFjdC5weToxMDcKICAgIC8vIGNsYXNzIFRlc3RDaGlsZChBUkM0Q29udHJhY3QpOgogICAgdHhuIE51bUFwcEFyZ3MKICAgIGJ6IG1haW5fYmFyZV9yb3V0aW5nQDgKICAgIHB1c2hieXRlc3MgMHg1MGRjM2EwZSAweDkwZmFmYmU4IDB4ODZkZTk2ZjEgLy8gbWV0aG9kICJ1cGRhdGVfb3JfZGVsZXRlKCl2b2lkIiwgbWV0aG9kICJjcmVhdGVfYm94KHBheSl1aW50NjQiLCBtZXRob2QgImRvX3NvbWV0aGluZ19lbHNlX3dpdGhvdXRfYm94ZXMoKXZvaWQiCiAgICB0eG5hIEFwcGxpY2F0aW9uQXJncyAwCiAgICBtYXRjaCBtYWluX3VwZGF0ZV9vcl9kZWxldGVfcm91dGVANSBtYWluX2NyZWF0ZV9ib3hfcm91dGVANiBtYWluX2RvX3NvbWV0aGluZ19lbHNlX3dpdGhvdXRfYm94ZXNfcm91dGVANwoKbWFpbl9hZnRlcl9pZl9lbHNlQDEwOgogICAgLy8gY29udHJhY3QucHk6MTA3CiAgICAvLyBjbGFzcyBUZXN0Q2hpbGQoQVJDNENvbnRyYWN0KToKICAgIGludGNfMSAvLyAwCiAgICByZXR1cm4KCm1haW5fZG9fc29tZXRoaW5nX2Vsc2Vfd2l0aG91dF9ib3hlc19yb3V0ZUA3OgogICAgLy8gY29udHJhY3QucHk6MTM2CiAgICAvLyBAYWJpbWV0aG9kCiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICBhc3NlcnQgLy8gT25Db21wbGV0aW9uIGlzIG5vdCBOb09wCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgYXNzZXJ0IC8vIGNhbiBvbmx5IGNhbGwgd2hlbiBub3QgY3JlYXRpbmcKICAgIGludGNfMCAvLyAxCiAgICByZXR1cm4KCm1haW5fY3JlYXRlX2JveF9yb3V0ZUA2OgogICAgLy8gY29udHJhY3QucHk6MTE1CiAgICAvLyBAYWJpbWV0aG9kCiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICBhc3NlcnQgLy8gT25Db21wbGV0aW9uIGlzIG5vdCBOb09wCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgYXNzZXJ0IC8vIGNhbiBvbmx5IGNhbGwgd2hlbiBub3QgY3JlYXRpbmcKICAgIC8vIGNvbnRyYWN0LnB5OjEwNwogICAgLy8gY2xhc3MgVGVzdENoaWxkKEFSQzRDb250cmFjdCk6CiAgICB0eG4gR3JvdXBJbmRleAogICAgaW50Y18wIC8vIDEKICAgIC0KICAgIGR1cAogICAgZ3R4bnMgVHlwZUVudW0KICAgIGludGNfMCAvLyBwYXkKICAgID09CiAgICBhc3NlcnQgLy8gdHJhbnNhY3Rpb24gdHlwZSBpcyBwYXkKICAgIC8vIGNvbnRyYWN0LnB5OjExNQogICAgLy8gQGFiaW1ldGhvZAogICAgY2FsbHN1YiBjcmVhdGVfYm94CiAgICBpdG9iCiAgICBwdXNoYnl0ZXMgMHgxNTFmN2M3NQogICAgc3dhcAogICAgY29uY2F0CiAgICBsb2cKICAgIGludGNfMCAvLyAxCiAgICByZXR1cm4KCm1haW5fdXBkYXRlX29yX2RlbGV0ZV9yb3V0ZUA1OgogICAgLy8gY29udHJhY3QucHk6MTExCiAgICAvLyBAYWJpbWV0aG9kKGFsbG93X2FjdGlvbnM9WydVcGRhdGVBcHBsaWNhdGlvbicsICdEZWxldGVBcHBsaWNhdGlvbiddKQogICAgaW50Y18wIC8vIDEKICAgIHR4biBPbkNvbXBsZXRpb24KICAgIHNobAogICAgcHVzaGludCA0OCAvLyA0OAogICAgJgogICAgYXNzZXJ0IC8vIE9uQ29tcGxldGlvbiBpcyBub3Qgb25lIG9mIFVwZGF0ZUFwcGxpY2F0aW9uLCBEZWxldGVBcHBsaWNhdGlvbgogICAgdHhuIEFwcGxpY2F0aW9uSUQKICAgIGFzc2VydCAvLyBjYW4gb25seSBjYWxsIHdoZW4gbm90IGNyZWF0aW5nCiAgICBpbnRjXzAgLy8gMQogICAgcmV0dXJuCgptYWluX2JhcmVfcm91dGluZ0A4OgogICAgLy8gY29udHJhY3QucHk6MTA3CiAgICAvLyBjbGFzcyBUZXN0Q2hpbGQoQVJDNENvbnRyYWN0KToKICAgIHR4biBPbkNvbXBsZXRpb24KICAgIGJueiBtYWluX2FmdGVyX2lmX2Vsc2VAMTAKICAgIHR4biBBcHBsaWNhdGlvbklECiAgICAhCiAgICBhc3NlcnQgLy8gY2FuIG9ubHkgY2FsbCB3aGVuIGNyZWF0aW5nCiAgICBpbnRjXzAgLy8gMQogICAgcmV0dXJuCgoKLy8gY29udHJhY3QuVGVzdENoaWxkLmNyZWF0ZV9ib3gobWJyX3BheW1lbnQ6IHVpbnQ2NCkgLT4gdWludDY0OgpjcmVhdGVfYm94OgogICAgLy8gY29udHJhY3QucHk6MTE1LTExNgogICAgLy8gQGFiaW1ldGhvZAogICAgLy8gZGVmIGNyZWF0ZV9ib3goc2VsZiwgbWJyX3BheW1lbnQ6IGd0eG4uUGF5bWVudFRyYW5zYWN0aW9uKSAtPiBVSW50NjQ6CiAgICBwcm90byAxIDEKICAgIC8vIGNvbnRyYWN0LnB5OjcKICAgIC8vIHJldHVybiBHbG9iYWwuY3VycmVudF9hcHBsaWNhdGlvbl9hZGRyZXNzLm1pbl9iYWxhbmNlCiAgICBnbG9iYWwgQ3VycmVudEFwcGxpY2F0aW9uQWRkcmVzcwogICAgYWNjdF9wYXJhbXNfZ2V0IEFjY3RNaW5CYWxhbmNlCiAgICBidXJ5IDEKICAgIGFzc2VydCAvLyBhY2NvdW50IGZ1bmRlZAogICAgLy8gY29udHJhY3QucHk6MTE4CiAgICAvLyBpZiBHbG9iYWwuY3VycmVudF9hcHBsaWNhdGlvbl9hZGRyZXNzLmJhbGFuY2UgPT0gMDoKICAgIGdsb2JhbCBDdXJyZW50QXBwbGljYXRpb25BZGRyZXNzCiAgICBhY2N0X3BhcmFtc19nZXQgQWNjdEJhbGFuY2UKICAgIGJ1cnkgMQogICAgYXNzZXJ0IC8vIGFjY291bnQgZnVuZGVkCiAgICAvLyBjb250cmFjdC5weToxMjEKICAgIC8vIHNlbGYudGVzdF9ib3hbYXJjNC5VSW50NjQoMCldID0gYXJjNC5VSW50NjQoMCkKICAgIHB1c2hieXRlcyAweDAwMDAwMDAwMDAwMDAwMDAKICAgIGR1cAogICAgYm94X3B1dAogICAgLy8gY29udHJhY3QucHk6NwogICAgLy8gcmV0dXJuIEdsb2JhbC5jdXJyZW50X2FwcGxpY2F0aW9uX2FkZHJlc3MubWluX2JhbGFuY2UKICAgIGdsb2JhbCBDdXJyZW50QXBwbGljYXRpb25BZGRyZXNzCiAgICBhY2N0X3BhcmFtc19nZXQgQWNjdE1pbkJhbGFuY2UKICAgIGJ1cnkgMQogICAgYXNzZXJ0IC8vIGFjY291bnQgZnVuZGVkCiAgICAvLyBjb250cmFjdC5weToxMzQtMTM1CiAgICAvLyAjIHJldHVybiBleGNlc3NfbWJyCiAgICAvLyByZXR1cm4gVUludDY0KDApCiAgICBpbnRjXzEgLy8gMAogICAgcmV0c3ViCg==", "clear": "I3ByYWdtYSB2ZXJzaW9uIDEwCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBhbGdvcHkuYXJjNC5BUkM0Q29udHJhY3QuY2xlYXJfc3RhdGVfcHJvZ3JhbSgpIC0+IHVpbnQ2NDoKbWFpbjoKICAgIHB1c2hpbnQgMSAvLyAxCiAgICByZXR1cm4K"}, "sourceInfo": {"approval": {"pcOffsetMethod": "none", "sourceInfo": [{"pc": [43, 52], "errorMessage": "OnCompletion is not NoOp"}, {"pc": [88], "errorMessage": "OnCompletion is not one of UpdateApplication, DeleteApplication"}, {"pc": [114, 121, 140], "errorMessage": "account funded"}, {"pc": [102], "errorMessage": "can only call when creating"}, {"pc": [46, 55, 91], "errorMessage": "can only call when not creating"}, {"pc": [65], "errorMessage": "transaction type is pay"}]}, "clear": {"pcOffsetMethod": "none", "sourceInfo": []}}, "templateVariables": {}}"""
+_APP_SPEC_JSON = r"""{"arcs": [22, 28], "bareActions": {"call": [], "create": ["NoOp"]}, "methods": [{"actions": {"call": ["UpdateApplication", "DeleteApplication"], "create": []}, "args": [], "name": "update_or_delete", "returns": {"type": "void"}, "events": [], "readonly": false, "recommendations": {}}, {"actions": {"call": ["NoOp"], "create": []}, "args": [{"type": "pay", "name": "mbr_payment"}], "name": "create_box", "returns": {"type": "uint64"}, "events": [], "readonly": false, "recommendations": {}}, {"actions": {"call": ["NoOp"], "create": []}, "args": [], "name": "do_something_else_without_boxes", "returns": {"type": "void"}, "events": [], "readonly": false, "recommendations": {}}], "name": "TestChild", "state": {"keys": {"box": {}, "global": {}, "local": {}}, "maps": {"box": {}, "global": {}, "local": {}}, "schema": {"global": {"bytes": 0, "ints": 0}, "local": {"bytes": 0, "ints": 0}}}, "structs": {}, "byteCode": {"approval": "CiACAQAxG0EAVIIDBFDcOg4EkPr76ASG3pbxNhoAjgMAKwALAAIjQzEZFEQxGEQiQzEZFEQxGEQxFiIJSTgQIhJEiAAkFoAEFR98dUxQsCJDIjEZkIEwGkQxGEQiQzEZQP/DMRgURCJDigEBMgpzAUQyCnMAREAAAyOMAIAIAAAAAAAAAAAjuUgyCnMBRIv/OAhMiwAJCbExAEsBsgiyByKyECOyAbNMiQ==", "clear": "CoEBQw=="}, "compilerInfo": {"compiler": "puya", "compilerVersion": {"major": 4, "minor": 10, "patch": 0}}, "events": [], "networks": {}, "source": {"approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBjb250cmFjdC5UZXN0Q2hpbGQuX19hbGdvcHlfZW50cnlwb2ludF93aXRoX2luaXQoKSAtPiB1aW50NjQ6Cm1haW46CiAgICBpbnRjYmxvY2sgMSAwCiAgICAvLyBjb250cmFjdC5weToxMDQKICAgIC8vIGNsYXNzIFRlc3RDaGlsZChBUkM0Q29udHJhY3QpOgogICAgdHhuIE51bUFwcEFyZ3MKICAgIGJ6IG1haW5fYmFyZV9yb3V0aW5nQDgKICAgIHB1c2hieXRlc3MgMHg1MGRjM2EwZSAweDkwZmFmYmU4IDB4ODZkZTk2ZjEgLy8gbWV0aG9kICJ1cGRhdGVfb3JfZGVsZXRlKCl2b2lkIiwgbWV0aG9kICJjcmVhdGVfYm94KHBheSl1aW50NjQiLCBtZXRob2QgImRvX3NvbWV0aGluZ19lbHNlX3dpdGhvdXRfYm94ZXMoKXZvaWQiCiAgICB0eG5hIEFwcGxpY2F0aW9uQXJncyAwCiAgICBtYXRjaCBtYWluX3VwZGF0ZV9vcl9kZWxldGVfcm91dGVANSBtYWluX2NyZWF0ZV9ib3hfcm91dGVANiBtYWluX2RvX3NvbWV0aGluZ19lbHNlX3dpdGhvdXRfYm94ZXNfcm91dGVANwoKbWFpbl9hZnRlcl9pZl9lbHNlQDEwOgogICAgLy8gY29udHJhY3QucHk6MTA0CiAgICAvLyBjbGFzcyBUZXN0Q2hpbGQoQVJDNENvbnRyYWN0KToKICAgIGludGNfMSAvLyAwCiAgICByZXR1cm4KCm1haW5fZG9fc29tZXRoaW5nX2Vsc2Vfd2l0aG91dF9ib3hlc19yb3V0ZUA3OgogICAgLy8gY29udHJhY3QucHk6MTM2CiAgICAvLyBAYWJpbWV0aG9kCiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICBhc3NlcnQgLy8gT25Db21wbGV0aW9uIGlzIG5vdCBOb09wCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgYXNzZXJ0IC8vIGNhbiBvbmx5IGNhbGwgd2hlbiBub3QgY3JlYXRpbmcKICAgIGludGNfMCAvLyAxCiAgICByZXR1cm4KCm1haW5fY3JlYXRlX2JveF9yb3V0ZUA2OgogICAgLy8gY29udHJhY3QucHk6MTEzCiAgICAvLyBAYWJpbWV0aG9kCiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICBhc3NlcnQgLy8gT25Db21wbGV0aW9uIGlzIG5vdCBOb09wCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgYXNzZXJ0IC8vIGNhbiBvbmx5IGNhbGwgd2hlbiBub3QgY3JlYXRpbmcKICAgIC8vIGNvbnRyYWN0LnB5OjEwNAogICAgLy8gY2xhc3MgVGVzdENoaWxkKEFSQzRDb250cmFjdCk6CiAgICB0eG4gR3JvdXBJbmRleAogICAgaW50Y18wIC8vIDEKICAgIC0KICAgIGR1cAogICAgZ3R4bnMgVHlwZUVudW0KICAgIGludGNfMCAvLyBwYXkKICAgID09CiAgICBhc3NlcnQgLy8gdHJhbnNhY3Rpb24gdHlwZSBpcyBwYXkKICAgIC8vIGNvbnRyYWN0LnB5OjExMwogICAgLy8gQGFiaW1ldGhvZAogICAgY2FsbHN1YiBjcmVhdGVfYm94CiAgICBpdG9iCiAgICBwdXNoYnl0ZXMgMHgxNTFmN2M3NQogICAgc3dhcAogICAgY29uY2F0CiAgICBsb2cKICAgIGludGNfMCAvLyAxCiAgICByZXR1cm4KCm1haW5fdXBkYXRlX29yX2RlbGV0ZV9yb3V0ZUA1OgogICAgLy8gY29udHJhY3QucHk6MTA5CiAgICAvLyBAYWJpbWV0aG9kKGFsbG93X2FjdGlvbnM9WydVcGRhdGVBcHBsaWNhdGlvbicsICdEZWxldGVBcHBsaWNhdGlvbiddKQogICAgaW50Y18wIC8vIDEKICAgIHR4biBPbkNvbXBsZXRpb24KICAgIHNobAogICAgcHVzaGludCA0OCAvLyA0OAogICAgJgogICAgYXNzZXJ0IC8vIE9uQ29tcGxldGlvbiBpcyBub3Qgb25lIG9mIFVwZGF0ZUFwcGxpY2F0aW9uLCBEZWxldGVBcHBsaWNhdGlvbgogICAgdHhuIEFwcGxpY2F0aW9uSUQKICAgIGFzc2VydCAvLyBjYW4gb25seSBjYWxsIHdoZW4gbm90IGNyZWF0aW5nCiAgICBpbnRjXzAgLy8gMQogICAgcmV0dXJuCgptYWluX2JhcmVfcm91dGluZ0A4OgogICAgLy8gY29udHJhY3QucHk6MTA0CiAgICAvLyBjbGFzcyBUZXN0Q2hpbGQoQVJDNENvbnRyYWN0KToKICAgIHR4biBPbkNvbXBsZXRpb24KICAgIGJueiBtYWluX2FmdGVyX2lmX2Vsc2VAMTAKICAgIHR4biBBcHBsaWNhdGlvbklECiAgICAhCiAgICBhc3NlcnQgLy8gY2FuIG9ubHkgY2FsbCB3aGVuIGNyZWF0aW5nCiAgICBpbnRjXzAgLy8gMQogICAgcmV0dXJuCgoKLy8gY29udHJhY3QuVGVzdENoaWxkLmNyZWF0ZV9ib3gobWJyX3BheW1lbnQ6IHVpbnQ2NCkgLT4gdWludDY0OgpjcmVhdGVfYm94OgogICAgLy8gY29udHJhY3QucHk6MTEzLTExNAogICAgLy8gQGFiaW1ldGhvZAogICAgLy8gZGVmIGNyZWF0ZV9ib3goc2VsZiwgbWJyX3BheW1lbnQ6IGd0eG4uUGF5bWVudFRyYW5zYWN0aW9uKSAtPiBVSW50NjQ6CiAgICBwcm90byAxIDEKICAgIC8vIGNvbnRyYWN0LnB5OjcKICAgIC8vIHJldHVybiBHbG9iYWwuY3VycmVudF9hcHBsaWNhdGlvbl9hZGRyZXNzLm1pbl9iYWxhbmNlCiAgICBnbG9iYWwgQ3VycmVudEFwcGxpY2F0aW9uQWRkcmVzcwogICAgYWNjdF9wYXJhbXNfZ2V0IEFjY3RNaW5CYWxhbmNlCiAgICBhc3NlcnQgLy8gYWNjb3VudCBmdW5kZWQKICAgIC8vIGNvbnRyYWN0LnB5OjExNgogICAgLy8gaWYgR2xvYmFsLmN1cnJlbnRfYXBwbGljYXRpb25fYWRkcmVzcy5iYWxhbmNlID09IDA6CiAgICBnbG9iYWwgQ3VycmVudEFwcGxpY2F0aW9uQWRkcmVzcwogICAgYWNjdF9wYXJhbXNfZ2V0IEFjY3RCYWxhbmNlCiAgICBhc3NlcnQgLy8gYWNjb3VudCBmdW5kZWQKICAgIGJueiBjcmVhdGVfYm94X2FmdGVyX2lmX2Vsc2VAMgogICAgLy8gY29udHJhY3QucHk6MTE3CiAgICAvLyBwcmVfbWJyID0gVUludDY0KDApCiAgICBpbnRjXzEgLy8gMAogICAgZnJhbWVfYnVyeSAwCgpjcmVhdGVfYm94X2FmdGVyX2lmX2Vsc2VAMjoKICAgIC8vIGNvbnRyYWN0LnB5OjExOQogICAgLy8gdGVzdF9ib3ggPSBCb3hSZWYoa2V5PWFyYzQuVUludDY0KDApLmJ5dGVzKQogICAgcHVzaGJ5dGVzIDB4MDAwMDAwMDAwMDAwMDAwMAogICAgLy8gY29udHJhY3QucHk6MTIwCiAgICAvLyB0ZXN0X2JveC5jcmVhdGUoc2l6ZT0wKQogICAgaW50Y18xIC8vIDAKICAgIGJveF9jcmVhdGUKICAgIHBvcAogICAgLy8gY29udHJhY3QucHk6NwogICAgLy8gcmV0dXJuIEdsb2JhbC5jdXJyZW50X2FwcGxpY2F0aW9uX2FkZHJlc3MubWluX2JhbGFuY2UKICAgIGdsb2JhbCBDdXJyZW50QXBwbGljYXRpb25BZGRyZXNzCiAgICBhY2N0X3BhcmFtc19nZXQgQWNjdE1pbkJhbGFuY2UKICAgIGFzc2VydCAvLyBhY2NvdW50IGZ1bmRlZAogICAgLy8gY29udHJhY3QucHk6MTI3CiAgICAvLyBleGNlc3NfbWJyID0gbWJyX3BheW1lbnQuYW1vdW50IC0gKHBvc3RfbWJyIC0gcHJlX21icikKICAgIGZyYW1lX2RpZyAtMQogICAgZ3R4bnMgQW1vdW50CiAgICBzd2FwCiAgICBmcmFtZV9kaWcgMAogICAgLQogICAgLQogICAgLy8gY29udHJhY3QucHk6MTI5LTEzMgogICAgLy8gaXR4bi5QYXltZW50KAogICAgLy8gICAgIHJlY2VpdmVyPVR4bi5zZW5kZXIsCiAgICAvLyAgICAgYW1vdW50PWV4Y2Vzc19tYnIKICAgIC8vICkuc3VibWl0KCkKICAgIGl0eG5fYmVnaW4KICAgIC8vIGNvbnRyYWN0LnB5OjEzMAogICAgLy8gcmVjZWl2ZXI9VHhuLnNlbmRlciwKICAgIHR4biBTZW5kZXIKICAgIGRpZyAxCiAgICBpdHhuX2ZpZWxkIEFtb3VudAogICAgaXR4bl9maWVsZCBSZWNlaXZlcgogICAgLy8gY29udHJhY3QucHk6MTI5CiAgICAvLyBpdHhuLlBheW1lbnQoCiAgICBpbnRjXzAgLy8gcGF5CiAgICBpdHhuX2ZpZWxkIFR5cGVFbnVtCiAgICBpbnRjXzEgLy8gMAogICAgaXR4bl9maWVsZCBGZWUKICAgIC8vIGNvbnRyYWN0LnB5OjEyOS0xMzIKICAgIC8vIGl0eG4uUGF5bWVudCgKICAgIC8vICAgICByZWNlaXZlcj1UeG4uc2VuZGVyLAogICAgLy8gICAgIGFtb3VudD1leGNlc3NfbWJyCiAgICAvLyApLnN1Ym1pdCgpCiAgICBpdHhuX3N1Ym1pdAogICAgLy8gY29udHJhY3QucHk6MTM0CiAgICAvLyByZXR1cm4gZXhjZXNzX21icgogICAgc3dhcAogICAgcmV0c3ViCg==", "clear": "I3ByYWdtYSB2ZXJzaW9uIDEwCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBhbGdvcHkuYXJjNC5BUkM0Q29udHJhY3QuY2xlYXJfc3RhdGVfcHJvZ3JhbSgpIC0+IHVpbnQ2NDoKbWFpbjoKICAgIHB1c2hpbnQgMSAvLyAxCiAgICByZXR1cm4K"}, "sourceInfo": {"approval": {"pcOffsetMethod": "none", "sourceInfo": [{"pc": [43, 52], "errorMessage": "OnCompletion is not NoOp"}, {"pc": [88], "errorMessage": "OnCompletion is not one of UpdateApplication, DeleteApplication"}, {"pc": [112, 117, 141], "errorMessage": "account funded"}, {"pc": [102], "errorMessage": "can only call when creating"}, {"pc": [46, 55, 91], "errorMessage": "can only call when not creating"}, {"pc": [65], "errorMessage": "transaction type is pay"}]}, "clear": {"pcOffsetMethod": "none", "sourceInfo": []}}, "templateVariables": {}}"""
 APP_SPEC = algokit_utils.Arc56Contract.from_json(_APP_SPEC_JSON)
 
 def _parse_abi_args(args: object | None = None) -> list[object] | None:
@@ -334,80 +334,6 @@ class TestChildState:
 
     def __init__(self, app_client: algokit_utils.AppClient):
         self.app_client = app_client
-
-    @property
-    def box(
-        self
-    ) -> "_BoxState":
-            """Methods to access box for the current app"""
-            return _BoxState(self.app_client)
-
-class _BoxState:
-    def __init__(self, app_client: algokit_utils.AppClient):
-        self.app_client = app_client
-        
-        # Pre-generated mapping of value types to their struct classes
-        self._struct_classes: dict[str, typing.Type[typing.Any]] = {}
-
-    def get_all(self) -> dict[str, typing.Any]:
-        """Get all current keyed values from box state"""
-        result = self.app_client.state.box.get_all()
-        if not result:
-            return {}
-
-        converted = {}
-        for key, value in result.items():
-            key_info = self.app_client.app_spec.state.keys.box.get(key)
-            struct_class = self._struct_classes.get(key_info.value_type) if key_info else None
-            converted[key] = (
-                _init_dataclass(struct_class, value) if struct_class and isinstance(value, dict)
-                else value
-            )
-        return converted
-
-    @property
-    def test_box(self) -> "_MapState[int, int]":
-        """Get values from the test_box map in box state"""
-        return _MapState(
-            self.app_client.state.box,
-            "test_box",
-            None
-        )
-
-_KeyType = typing.TypeVar("_KeyType")
-_ValueType = typing.TypeVar("_ValueType")
-
-class _AppClientStateMethodsProtocol(typing.Protocol):
-    def get_map(self, map_name: str) -> dict[typing.Any, typing.Any]:
-        ...
-    def get_map_value(self, map_name: str, key: typing.Any) -> typing.Any | None:
-        ...
-
-class _MapState(typing.Generic[_KeyType, _ValueType]):
-    """Generic class for accessing state maps with strongly typed keys and values"""
-
-    def __init__(self, state_accessor: _AppClientStateMethodsProtocol, map_name: str,
-                struct_class: typing.Type[_ValueType] | None = None):
-        self._state_accessor = state_accessor
-        self._map_name = map_name
-        self._struct_class = struct_class
-
-    def get_map(self) -> dict[_KeyType, _ValueType]:
-        """Get all current values in the map"""
-        result = self._state_accessor.get_map(self._map_name)
-        if self._struct_class and result:
-            return {k: _init_dataclass(self._struct_class, v) if isinstance(v, dict) else v
-                    for k, v in result.items()}  # type: ignore
-        return typing.cast(dict[_KeyType, _ValueType], result or {})
-
-    def get_value(self, key: _KeyType) -> _ValueType | None:
-        """Get a value from the map by key"""
-        key_value = dataclasses.asdict(key) if dataclasses.is_dataclass(key) else key  # type: ignore
-        value = self._state_accessor.get_map_value(self._map_name, key_value)
-        if value is not None and self._struct_class and isinstance(value, dict):
-            return _init_dataclass(self._struct_class, value)  # type: ignore
-        return typing.cast(_ValueType | None, value)
-
 
 class TestChildClient:
     """Client for interacting with TestChild smart contract"""
