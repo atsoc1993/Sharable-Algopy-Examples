@@ -1,6 +1,6 @@
 from algokit_utils import AlgorandClient, SigningAccount, PaymentParams, AlgoAmount, CommonAppCallParams, OnUpdate, OnSchemaBreak, BoxReference
-from TestFactoryClient import TestFactoryFactory, SetTestContractChildArgs, CreateTestContractChildAndBoxArgs, CreateTestContractChildCallDoSomethingElseArgs #, TestFactoryMethodCallCreateParams
-from TestChildClient import TestChildFactory
+from contract_files.TestFactoryClient import TestFactoryFactory, SetTestContractChildArgs, CreateTestContractChildAndBoxArgs, CreateTestContractChildCallDoSomethingElseArgs #, TestFactoryMethodCallCreateParams
+from contract_files.TestChildClient import TestChildFactory
 from dotenv import load_dotenv
 import os
 
