@@ -1,0 +1,966 @@
+{
+  "version": 3,
+  "sources": [
+    "../contract.py"
+  ],
+  "mappings": ";;;;;;;;;;;;;AAIA;;AAAA;;;AAAA;;AAAA;AAAA;AAAA;;AAAA;AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;;;AAAA;;;;;;;;;;;;;;AAAA;;;;;;;;;AAIK;;;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA;;;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA;;;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAIA;;;AAAA;;;AAEkB;AAAA;AACgB;;AAAA;AAAA;AAChB;AAAA;AAAA;AAJlB;AAAA;AAAA;AAAA;AAAA;AAAA;AAOA;;;AAAA;;;AAEkB;AAAA;AACiB;AAAA;AAAA;AACjB;AAAA;AAAA;AAJlB;AAAA;AAAA;AAAA;AAAA;AAAA;AAOA;;;AAAA;;;AAEkB;AAAA;AACiB;AAAA;AAAA;AACjB;AAAA;AAAA;AAJlB;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA",
+  "op_pc_offset": 0,
+  "pc_events": {
+    "1": {
+      "subroutine": "algopy.arc4.ARC4Contract.approval_program",
+      "params": {},
+      "block": "main",
+      "stack_in": [],
+      "op": "intcblock 1 64 32"
+    },
+    "6": {
+      "op": "bytecblock 0x151f7c75"
+    },
+    "13": {
+      "op": "txn NumAppArgs",
+      "defined_out": [
+        "tmp%0#1"
+      ],
+      "stack_out": [
+        "tmp%0#1"
+      ]
+    },
+    "15": {
+      "op": "bz main___algopy_default_create@15",
+      "stack_out": []
+    },
+    "18": {
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "tmp%2#0"
+      ]
+    },
+    "20": {
+      "op": "!",
+      "defined_out": [
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "tmp%3#0"
+      ]
+    },
+    "21": {
+      "error": "OnCompletion must be NoOp",
+      "op": "assert // OnCompletion must be NoOp",
+      "stack_out": []
+    },
+    "22": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "tmp%4#0"
+      ]
+    },
+    "24": {
+      "op": "assert",
+      "stack_out": []
+    },
+    "25": {
+      "op": "pushbytess 0xb83722d9 0x183e0f6d 0x6463ab84 0xf89eaf82 0x5838b2be 0xdcf95838 // method \"test_arc4_uint64(byte[])uint64\", method \"test_arc4_uint256(byte[])uint256\", method \"test_biguint(byte[])uint512\", method \"test_arc4_uint64_w_padding(byte[])uint64\", method \"test_arc4_uint256_w_padding(byte[])uint256\", method \"test_bigint_w_padding(byte[])uint512\"",
+      "defined_out": [
+        "Method(test_arc4_uint256(byte[])uint256)",
+        "Method(test_arc4_uint256_w_padding(byte[])uint256)",
+        "Method(test_arc4_uint64(byte[])uint64)",
+        "Method(test_arc4_uint64_w_padding(byte[])uint64)",
+        "Method(test_bigint_w_padding(byte[])uint512)",
+        "Method(test_biguint(byte[])uint512)"
+      ],
+      "stack_out": [
+        "Method(test_arc4_uint64(byte[])uint64)",
+        "Method(test_arc4_uint256(byte[])uint256)",
+        "Method(test_biguint(byte[])uint512)",
+        "Method(test_arc4_uint64_w_padding(byte[])uint64)",
+        "Method(test_arc4_uint256_w_padding(byte[])uint256)",
+        "Method(test_bigint_w_padding(byte[])uint512)"
+      ]
+    },
+    "57": {
+      "op": "txna ApplicationArgs 0",
+      "defined_out": [
+        "Method(test_arc4_uint256(byte[])uint256)",
+        "Method(test_arc4_uint256_w_padding(byte[])uint256)",
+        "Method(test_arc4_uint64(byte[])uint64)",
+        "Method(test_arc4_uint64_w_padding(byte[])uint64)",
+        "Method(test_bigint_w_padding(byte[])uint512)",
+        "Method(test_biguint(byte[])uint512)",
+        "tmp%6#0"
+      ],
+      "stack_out": [
+        "Method(test_arc4_uint64(byte[])uint64)",
+        "Method(test_arc4_uint256(byte[])uint256)",
+        "Method(test_biguint(byte[])uint512)",
+        "Method(test_arc4_uint64_w_padding(byte[])uint64)",
+        "Method(test_arc4_uint256_w_padding(byte[])uint256)",
+        "Method(test_bigint_w_padding(byte[])uint512)",
+        "tmp%6#0"
+      ]
+    },
+    "60": {
+      "op": "match test_arc4_uint64 test_arc4_uint256 test_biguint test_arc4_uint64_w_padding test_arc4_uint256_w_padding test_bigint_w_padding",
+      "stack_out": []
+    },
+    "74": {
+      "op": "err"
+    },
+    "75": {
+      "block": "main___algopy_default_create@15",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%7#0"
+      ],
+      "stack_out": [
+        "tmp%7#0"
+      ]
+    },
+    "77": {
+      "op": "!",
+      "defined_out": [
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0"
+      ]
+    },
+    "78": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%8#0",
+        "tmp%9#0"
+      ],
+      "stack_out": [
+        "tmp%8#0",
+        "tmp%9#0"
+      ]
+    },
+    "80": {
+      "op": "!",
+      "defined_out": [
+        "tmp%10#0",
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0",
+        "tmp%10#0"
+      ]
+    },
+    "81": {
+      "op": "&&",
+      "defined_out": [
+        "tmp%11#0"
+      ],
+      "stack_out": [
+        "tmp%11#0"
+      ]
+    },
+    "82": {
+      "error": "OnCompletion must be NoOp && can only call when creating",
+      "op": "return // on error: OnCompletion must be NoOp && can only call when creating",
+      "defined_out": [],
+      "stack_out": []
+    },
+    "83": {
+      "subroutine": "contract.Test.test_arc4_uint64[routing]",
+      "params": {},
+      "block": "test_arc4_uint64",
+      "stack_in": [],
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ],
+      "stack_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ]
+    },
+    "86": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0"
+      ]
+    },
+    "89": {
+      "op": "bytec_0 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "0x151f7c75"
+      ]
+    },
+    "90": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "bytes_1#0"
+      ]
+    },
+    "91": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "tmp%2#0"
+      ]
+    },
+    "92": {
+      "op": "log",
+      "stack_out": []
+    },
+    "93": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "1"
+      ],
+      "stack_out": [
+        "1"
+      ]
+    },
+    "94": {
+      "op": "return",
+      "stack_out": []
+    },
+    "95": {
+      "subroutine": "contract.Test.test_arc4_uint256[routing]",
+      "params": {},
+      "block": "test_arc4_uint256",
+      "stack_in": [],
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ],
+      "stack_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ]
+    },
+    "98": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0"
+      ]
+    },
+    "101": {
+      "op": "bytec_0 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "0x151f7c75"
+      ]
+    },
+    "102": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "bytes_1#0"
+      ]
+    },
+    "103": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "tmp%2#0"
+      ]
+    },
+    "104": {
+      "op": "log",
+      "stack_out": []
+    },
+    "105": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "1"
+      ],
+      "stack_out": [
+        "1"
+      ]
+    },
+    "106": {
+      "op": "return",
+      "stack_out": []
+    },
+    "107": {
+      "subroutine": "contract.Test.test_biguint[routing]",
+      "params": {},
+      "block": "test_biguint",
+      "stack_in": [],
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ],
+      "stack_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ]
+    },
+    "110": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0"
+      ]
+    },
+    "113": {
+      "op": "dup",
+      "defined_out": [
+        "bytes_1#0",
+        "bytes_1#0 (copy)"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "bytes_1#0 (copy)"
+      ]
+    },
+    "114": {
+      "op": "len",
+      "defined_out": [
+        "aggregate%value_len%0#0",
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "aggregate%value_len%0#0"
+      ]
+    },
+    "115": {
+      "op": "intc_1 // 64",
+      "defined_out": [
+        "64",
+        "aggregate%value_len%0#0",
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "aggregate%value_len%0#0",
+        "64"
+      ]
+    },
+    "116": {
+      "op": "<=",
+      "defined_out": [
+        "aggregate%len_ok%0#0",
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "aggregate%len_ok%0#0"
+      ]
+    },
+    "117": {
+      "error": "overflow",
+      "op": "assert // overflow",
+      "stack_out": [
+        "bytes_1#0"
+      ]
+    },
+    "118": {
+      "op": "intc_1 // 64",
+      "stack_out": [
+        "bytes_1#0",
+        "64"
+      ]
+    },
+    "119": {
+      "op": "bzero",
+      "defined_out": [
+        "aggregate%bzero%0#0",
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "aggregate%bzero%0#0"
+      ]
+    },
+    "120": {
+      "op": "b|",
+      "defined_out": [
+        "aggregate%arc4_encoded%0#0"
+      ],
+      "stack_out": [
+        "aggregate%arc4_encoded%0#0"
+      ]
+    },
+    "121": {
+      "op": "bytec_0 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "aggregate%arc4_encoded%0#0"
+      ],
+      "stack_out": [
+        "aggregate%arc4_encoded%0#0",
+        "0x151f7c75"
+      ]
+    },
+    "122": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "aggregate%arc4_encoded%0#0"
+      ]
+    },
+    "123": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "tmp%3#0"
+      ]
+    },
+    "124": {
+      "op": "log",
+      "stack_out": []
+    },
+    "125": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "1"
+      ],
+      "stack_out": [
+        "1"
+      ]
+    },
+    "126": {
+      "op": "return",
+      "stack_out": []
+    },
+    "127": {
+      "subroutine": "contract.Test.test_arc4_uint64_w_padding[routing]",
+      "params": {},
+      "block": "test_arc4_uint64_w_padding",
+      "stack_in": [],
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ],
+      "stack_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ]
+    },
+    "130": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0"
+      ]
+    },
+    "133": {
+      "op": "dup",
+      "defined_out": [
+        "bytes_1#0",
+        "bytes_1#0 (copy)"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "bytes_1#0 (copy)"
+      ]
+    },
+    "134": {
+      "op": "len",
+      "defined_out": [
+        "bytes_1#0",
+        "bytes_length#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "bytes_length#0"
+      ]
+    },
+    "135": {
+      "op": "pushint 8 // 8",
+      "defined_out": [
+        "8",
+        "bytes_1#0",
+        "bytes_length#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "bytes_length#0",
+        "8"
+      ]
+    },
+    "137": {
+      "op": "swap",
+      "stack_out": [
+        "bytes_1#0",
+        "8",
+        "bytes_length#0"
+      ]
+    },
+    "138": {
+      "op": "-",
+      "defined_out": [
+        "bytes_1#0",
+        "uint64_padding_length_needed#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "uint64_padding_length_needed#0"
+      ]
+    },
+    "139": {
+      "op": "bzero",
+      "defined_out": [
+        "bytes_1#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "tmp%2#0"
+      ]
+    },
+    "140": {
+      "op": "swap",
+      "stack_out": [
+        "tmp%2#0",
+        "bytes_1#0"
+      ]
+    },
+    "141": {
+      "op": "concat",
+      "defined_out": [
+        "padded_bytes#0"
+      ],
+      "stack_out": [
+        "padded_bytes#0"
+      ]
+    },
+    "142": {
+      "op": "bytec_0 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "padded_bytes#0"
+      ],
+      "stack_out": [
+        "padded_bytes#0",
+        "0x151f7c75"
+      ]
+    },
+    "143": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "padded_bytes#0"
+      ]
+    },
+    "144": {
+      "op": "concat",
+      "stack_out": [
+        "tmp%2#0"
+      ]
+    },
+    "145": {
+      "op": "log",
+      "stack_out": []
+    },
+    "146": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "1"
+      ],
+      "stack_out": [
+        "1"
+      ]
+    },
+    "147": {
+      "op": "return",
+      "stack_out": []
+    },
+    "148": {
+      "subroutine": "contract.Test.test_arc4_uint256_w_padding[routing]",
+      "params": {},
+      "block": "test_arc4_uint256_w_padding",
+      "stack_in": [],
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ],
+      "stack_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ]
+    },
+    "151": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0"
+      ]
+    },
+    "154": {
+      "op": "dup",
+      "defined_out": [
+        "bytes_1#0",
+        "bytes_1#0 (copy)"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "bytes_1#0 (copy)"
+      ]
+    },
+    "155": {
+      "op": "len",
+      "defined_out": [
+        "bytes_1#0",
+        "bytes_length#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "bytes_length#0"
+      ]
+    },
+    "156": {
+      "op": "intc_2 // 32",
+      "defined_out": [
+        "32",
+        "bytes_1#0",
+        "bytes_length#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "bytes_length#0",
+        "32"
+      ]
+    },
+    "157": {
+      "op": "swap",
+      "stack_out": [
+        "bytes_1#0",
+        "32",
+        "bytes_length#0"
+      ]
+    },
+    "158": {
+      "op": "-",
+      "defined_out": [
+        "bytes_1#0",
+        "uint256_padding_length_needed#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "uint256_padding_length_needed#0"
+      ]
+    },
+    "159": {
+      "op": "bzero",
+      "defined_out": [
+        "bytes_1#0",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "tmp%2#0"
+      ]
+    },
+    "160": {
+      "op": "swap",
+      "stack_out": [
+        "tmp%2#0",
+        "bytes_1#0"
+      ]
+    },
+    "161": {
+      "op": "concat",
+      "defined_out": [
+        "padded_bytes#0"
+      ],
+      "stack_out": [
+        "padded_bytes#0"
+      ]
+    },
+    "162": {
+      "op": "bytec_0 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "padded_bytes#0"
+      ],
+      "stack_out": [
+        "padded_bytes#0",
+        "0x151f7c75"
+      ]
+    },
+    "163": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "padded_bytes#0"
+      ]
+    },
+    "164": {
+      "op": "concat",
+      "stack_out": [
+        "tmp%2#0"
+      ]
+    },
+    "165": {
+      "op": "log",
+      "stack_out": []
+    },
+    "166": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "1"
+      ],
+      "stack_out": [
+        "1"
+      ]
+    },
+    "167": {
+      "op": "return",
+      "stack_out": []
+    },
+    "168": {
+      "subroutine": "contract.Test.test_bigint_w_padding[routing]",
+      "params": {},
+      "block": "test_bigint_w_padding",
+      "stack_in": [],
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ],
+      "stack_out": [
+        "reinterpret_Encoded(len+uint8[])%0#0"
+      ]
+    },
+    "171": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "bytes_1#0"
+      ],
+      "stack_out": [
+        "bytes_1#0"
+      ]
+    },
+    "174": {
+      "op": "dup",
+      "defined_out": [
+        "bytes_1#0",
+        "bytes_1#0 (copy)"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "bytes_1#0 (copy)"
+      ]
+    },
+    "175": {
+      "op": "len",
+      "defined_out": [
+        "bytes_1#0",
+        "bytes_length#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "bytes_length#0"
+      ]
+    },
+    "176": {
+      "op": "intc_2 // 32",
+      "defined_out": [
+        "32",
+        "bytes_1#0",
+        "bytes_length#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "bytes_length#0",
+        "32"
+      ]
+    },
+    "177": {
+      "op": "swap",
+      "stack_out": [
+        "bytes_1#0",
+        "32",
+        "bytes_length#0"
+      ]
+    },
+    "178": {
+      "op": "-",
+      "defined_out": [
+        "bytes_1#0",
+        "uint256_padding_length_needed#0"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "uint256_padding_length_needed#0"
+      ]
+    },
+    "179": {
+      "op": "bzero",
+      "defined_out": [
+        "bytes_1#0",
+        "tmp%2#1"
+      ],
+      "stack_out": [
+        "bytes_1#0",
+        "tmp%2#1"
+      ]
+    },
+    "180": {
+      "op": "swap",
+      "stack_out": [
+        "tmp%2#1",
+        "bytes_1#0"
+      ]
+    },
+    "181": {
+      "op": "concat",
+      "defined_out": [
+        "padded_bytes#0"
+      ],
+      "stack_out": [
+        "padded_bytes#0"
+      ]
+    },
+    "182": {
+      "op": "dup",
+      "defined_out": [
+        "padded_bytes#0",
+        "padded_bytes#0 (copy)"
+      ],
+      "stack_out": [
+        "padded_bytes#0",
+        "padded_bytes#0 (copy)"
+      ]
+    },
+    "183": {
+      "op": "len",
+      "defined_out": [
+        "aggregate%value_len%0#0",
+        "padded_bytes#0"
+      ],
+      "stack_out": [
+        "padded_bytes#0",
+        "aggregate%value_len%0#0"
+      ]
+    },
+    "184": {
+      "op": "intc_1 // 64",
+      "defined_out": [
+        "64",
+        "aggregate%value_len%0#0",
+        "padded_bytes#0"
+      ],
+      "stack_out": [
+        "padded_bytes#0",
+        "aggregate%value_len%0#0",
+        "64"
+      ]
+    },
+    "185": {
+      "op": "<=",
+      "defined_out": [
+        "aggregate%len_ok%0#0",
+        "padded_bytes#0"
+      ],
+      "stack_out": [
+        "padded_bytes#0",
+        "aggregate%len_ok%0#0"
+      ]
+    },
+    "186": {
+      "error": "overflow",
+      "op": "assert // overflow",
+      "stack_out": [
+        "padded_bytes#0"
+      ]
+    },
+    "187": {
+      "op": "intc_1 // 64",
+      "stack_out": [
+        "padded_bytes#0",
+        "64"
+      ]
+    },
+    "188": {
+      "op": "bzero",
+      "defined_out": [
+        "aggregate%bzero%0#0",
+        "padded_bytes#0"
+      ],
+      "stack_out": [
+        "padded_bytes#0",
+        "aggregate%bzero%0#0"
+      ]
+    },
+    "189": {
+      "op": "b|",
+      "defined_out": [
+        "aggregate%arc4_encoded%0#0"
+      ],
+      "stack_out": [
+        "aggregate%arc4_encoded%0#0"
+      ]
+    },
+    "190": {
+      "op": "bytec_0 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "aggregate%arc4_encoded%0#0"
+      ],
+      "stack_out": [
+        "aggregate%arc4_encoded%0#0",
+        "0x151f7c75"
+      ]
+    },
+    "191": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "aggregate%arc4_encoded%0#0"
+      ]
+    },
+    "192": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "tmp%3#0"
+      ]
+    },
+    "193": {
+      "op": "log",
+      "stack_out": []
+    },
+    "194": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "1"
+      ],
+      "stack_out": [
+        "1"
+      ]
+    },
+    "195": {
+      "op": "return",
+      "stack_out": []
+    }
+  }
+}

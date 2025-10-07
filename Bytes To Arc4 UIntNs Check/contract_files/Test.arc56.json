@@ -1,0 +1,213 @@
+{
+    "name": "Test",
+    "structs": {},
+    "methods": [
+        {
+            "name": "test_arc4_uint64",
+            "args": [
+                {
+                    "type": "byte[]",
+                    "name": "bytes_1"
+                }
+            ],
+            "returns": {
+                "type": "uint64"
+            },
+            "actions": {
+                "create": [],
+                "call": [
+                    "NoOp"
+                ]
+            },
+            "readonly": false,
+            "events": [],
+            "recommendations": {}
+        },
+        {
+            "name": "test_arc4_uint256",
+            "args": [
+                {
+                    "type": "byte[]",
+                    "name": "bytes_1"
+                }
+            ],
+            "returns": {
+                "type": "uint256"
+            },
+            "actions": {
+                "create": [],
+                "call": [
+                    "NoOp"
+                ]
+            },
+            "readonly": false,
+            "events": [],
+            "recommendations": {}
+        },
+        {
+            "name": "test_biguint",
+            "args": [
+                {
+                    "type": "byte[]",
+                    "name": "bytes_1"
+                }
+            ],
+            "returns": {
+                "type": "uint512"
+            },
+            "actions": {
+                "create": [],
+                "call": [
+                    "NoOp"
+                ]
+            },
+            "readonly": false,
+            "events": [],
+            "recommendations": {}
+        },
+        {
+            "name": "test_arc4_uint64_w_padding",
+            "args": [
+                {
+                    "type": "byte[]",
+                    "name": "bytes_1"
+                }
+            ],
+            "returns": {
+                "type": "uint64"
+            },
+            "actions": {
+                "create": [],
+                "call": [
+                    "NoOp"
+                ]
+            },
+            "readonly": false,
+            "events": [],
+            "recommendations": {}
+        },
+        {
+            "name": "test_arc4_uint256_w_padding",
+            "args": [
+                {
+                    "type": "byte[]",
+                    "name": "bytes_1"
+                }
+            ],
+            "returns": {
+                "type": "uint256"
+            },
+            "actions": {
+                "create": [],
+                "call": [
+                    "NoOp"
+                ]
+            },
+            "readonly": false,
+            "events": [],
+            "recommendations": {}
+        },
+        {
+            "name": "test_bigint_w_padding",
+            "args": [
+                {
+                    "type": "byte[]",
+                    "name": "bytes_1"
+                }
+            ],
+            "returns": {
+                "type": "uint512"
+            },
+            "actions": {
+                "create": [],
+                "call": [
+                    "NoOp"
+                ]
+            },
+            "readonly": false,
+            "events": [],
+            "recommendations": {}
+        }
+    ],
+    "arcs": [
+        22,
+        28
+    ],
+    "networks": {},
+    "state": {
+        "schema": {
+            "global": {
+                "ints": 0,
+                "bytes": 0
+            },
+            "local": {
+                "ints": 0,
+                "bytes": 0
+            }
+        },
+        "keys": {
+            "global": {},
+            "local": {},
+            "box": {}
+        },
+        "maps": {
+            "global": {},
+            "local": {},
+            "box": {}
+        }
+    },
+    "bareActions": {
+        "create": [
+            "NoOp"
+        ],
+        "call": []
+    },
+    "sourceInfo": {
+        "approval": {
+            "sourceInfo": [
+                {
+                    "pc": [
+                        21
+                    ],
+                    "errorMessage": "OnCompletion must be NoOp"
+                },
+                {
+                    "pc": [
+                        82
+                    ],
+                    "errorMessage": "OnCompletion must be NoOp && can only call when creating"
+                },
+                {
+                    "pc": [
+                        117,
+                        186
+                    ],
+                    "errorMessage": "overflow"
+                }
+            ],
+            "pcOffsetMethod": "none"
+        },
+        "clear": {
+            "sourceInfo": [],
+            "pcOffsetMethod": "none"
+        }
+    },
+    "source": {
+        "approval": "I3ByYWdtYSB2ZXJzaW9uIDExCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBhbGdvcHkuYXJjNC5BUkM0Q29udHJhY3QuYXBwcm92YWxfcHJvZ3JhbSgpIC0+IHVpbnQ2NDoKbWFpbjoKICAgIGludGNibG9jayAxIDY0IDMyCiAgICBieXRlY2Jsb2NrIDB4MTUxZjdjNzUKICAgIC8vIGNvbnRyYWN0LnB5OjUKICAgIC8vIGNsYXNzIFRlc3QoQVJDNENvbnRyYWN0KToKICAgIHR4biBOdW1BcHBBcmdzCiAgICBieiBtYWluX19fYWxnb3B5X2RlZmF1bHRfY3JlYXRlQDE1CiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICBhc3NlcnQgLy8gT25Db21wbGV0aW9uIG11c3QgYmUgTm9PcAogICAgdHhuIEFwcGxpY2F0aW9uSUQKICAgIGFzc2VydAogICAgcHVzaGJ5dGVzcyAweGI4MzcyMmQ5IDB4MTgzZTBmNmQgMHg2NDYzYWI4NCAweGY4OWVhZjgyIDB4NTgzOGIyYmUgMHhkY2Y5NTgzOCAvLyBtZXRob2QgInRlc3RfYXJjNF91aW50NjQoYnl0ZVtdKXVpbnQ2NCIsIG1ldGhvZCAidGVzdF9hcmM0X3VpbnQyNTYoYnl0ZVtdKXVpbnQyNTYiLCBtZXRob2QgInRlc3RfYmlndWludChieXRlW10pdWludDUxMiIsIG1ldGhvZCAidGVzdF9hcmM0X3VpbnQ2NF93X3BhZGRpbmcoYnl0ZVtdKXVpbnQ2NCIsIG1ldGhvZCAidGVzdF9hcmM0X3VpbnQyNTZfd19wYWRkaW5nKGJ5dGVbXSl1aW50MjU2IiwgbWV0aG9kICJ0ZXN0X2JpZ2ludF93X3BhZGRpbmcoYnl0ZVtdKXVpbnQ1MTIiCiAgICB0eG5hIEFwcGxpY2F0aW9uQXJncyAwCiAgICBtYXRjaCB0ZXN0X2FyYzRfdWludDY0IHRlc3RfYXJjNF91aW50MjU2IHRlc3RfYmlndWludCB0ZXN0X2FyYzRfdWludDY0X3dfcGFkZGluZyB0ZXN0X2FyYzRfdWludDI1Nl93X3BhZGRpbmcgdGVzdF9iaWdpbnRfd19wYWRkaW5nCiAgICBlcnIKCm1haW5fX19hbGdvcHlfZGVmYXVsdF9jcmVhdGVAMTU6CiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgIQogICAgJiYKICAgIHJldHVybiAvLyBvbiBlcnJvcjogT25Db21wbGV0aW9uIG11c3QgYmUgTm9PcCAmJiBjYW4gb25seSBjYWxsIHdoZW4gY3JlYXRpbmcKCgovLyBjb250cmFjdC5UZXN0LnRlc3RfYXJjNF91aW50NjRbcm91dGluZ10oKSAtPiB2b2lkOgp0ZXN0X2FyYzRfdWludDY0OgogICAgLy8gY29udHJhY3QucHk6OQogICAgLy8gQGFiaW1ldGhvZAogICAgdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQogICAgZXh0cmFjdCAyIDAKICAgIGJ5dGVjXzAgLy8gMHgxNTFmN2M3NQogICAgc3dhcAogICAgY29uY2F0CiAgICBsb2cKICAgIGludGNfMCAvLyAxCiAgICByZXR1cm4KCgovLyBjb250cmFjdC5UZXN0LnRlc3RfYXJjNF91aW50MjU2W3JvdXRpbmddKCkgLT4gdm9pZDoKdGVzdF9hcmM0X3VpbnQyNTY6CiAgICAvLyBjb250cmFjdC5weToxMwogICAgLy8gQGFiaW1ldGhvZAogICAgdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQogICAgZXh0cmFjdCAyIDAKICAgIGJ5dGVjXzAgLy8gMHgxNTFmN2M3NQogICAgc3dhcAogICAgY29uY2F0CiAgICBsb2cKICAgIGludGNfMCAvLyAxCiAgICByZXR1cm4KCgovLyBjb250cmFjdC5UZXN0LnRlc3RfYmlndWludFtyb3V0aW5nXSgpIC0+IHZvaWQ6CnRlc3RfYmlndWludDoKICAgIC8vIGNvbnRyYWN0LnB5OjE3CiAgICAvLyBAYWJpbWV0aG9kCiAgICB0eG5hIEFwcGxpY2F0aW9uQXJncyAxCiAgICBleHRyYWN0IDIgMAogICAgZHVwCiAgICBsZW4KICAgIGludGNfMSAvLyA2NAogICAgPD0KICAgIGFzc2VydCAvLyBvdmVyZmxvdwogICAgaW50Y18xIC8vIDY0CiAgICBiemVybwogICAgYnwKICAgIGJ5dGVjXzAgLy8gMHgxNTFmN2M3NQogICAgc3dhcAogICAgY29uY2F0CiAgICBsb2cKICAgIGludGNfMCAvLyAxCiAgICByZXR1cm4KCgovLyBjb250cmFjdC5UZXN0LnRlc3RfYXJjNF91aW50NjRfd19wYWRkaW5nW3JvdXRpbmddKCkgLT4gdm9pZDoKdGVzdF9hcmM0X3VpbnQ2NF93X3BhZGRpbmc6CiAgICAvLyBjb250cmFjdC5weToyMQogICAgLy8gQGFiaW1ldGhvZAogICAgdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQogICAgZXh0cmFjdCAyIDAKICAgIC8vIGNvbnRyYWN0LnB5OjIzCiAgICAvLyBieXRlc19sZW5ndGggPSBieXRlc18xLmxlbmd0aAogICAgZHVwCiAgICBsZW4KICAgIC8vIGNvbnRyYWN0LnB5OjI0CiAgICAvLyB1aW50NjRfcGFkZGluZ19sZW5ndGhfbmVlZGVkID0gVUludDY0KDgpIC0gYnl0ZXNfbGVuZ3RoCiAgICBwdXNoaW50IDggLy8gOAogICAgc3dhcAogICAgLQogICAgLy8gY29udHJhY3QucHk6MjUKICAgIC8vIHBhZGRlZF9ieXRlcyA9IG9wLmJ6ZXJvKHVpbnQ2NF9wYWRkaW5nX2xlbmd0aF9uZWVkZWQpICsgYnl0ZXNfMQogICAgYnplcm8KICAgIHN3YXAKICAgIGNvbmNhdAogICAgLy8gY29udHJhY3QucHk6MjEKICAgIC8vIEBhYmltZXRob2QKICAgIGJ5dGVjXzAgLy8gMHgxNTFmN2M3NQogICAgc3dhcAogICAgY29uY2F0CiAgICBsb2cKICAgIGludGNfMCAvLyAxCiAgICByZXR1cm4KCgovLyBjb250cmFjdC5UZXN0LnRlc3RfYXJjNF91aW50MjU2X3dfcGFkZGluZ1tyb3V0aW5nXSgpIC0+IHZvaWQ6CnRlc3RfYXJjNF91aW50MjU2X3dfcGFkZGluZzoKICAgIC8vIGNvbnRyYWN0LnB5OjI4CiAgICAvLyBAYWJpbWV0aG9kCiAgICB0eG5hIEFwcGxpY2F0aW9uQXJncyAxCiAgICBleHRyYWN0IDIgMAogICAgLy8gY29udHJhY3QucHk6MzAKICAgIC8vIGJ5dGVzX2xlbmd0aCA9IGJ5dGVzXzEubGVuZ3RoCiAgICBkdXAKICAgIGxlbgogICAgLy8gY29udHJhY3QucHk6MzEKICAgIC8vIHVpbnQyNTZfcGFkZGluZ19sZW5ndGhfbmVlZGVkID0gVUludDY0KDMyKSAtIGJ5dGVzX2xlbmd0aAogICAgaW50Y18yIC8vIDMyCiAgICBzd2FwCiAgICAtCiAgICAvLyBjb250cmFjdC5weTozMgogICAgLy8gcGFkZGVkX2J5dGVzID0gb3AuYnplcm8odWludDI1Nl9wYWRkaW5nX2xlbmd0aF9uZWVkZWQpICsgYnl0ZXNfMQogICAgYnplcm8KICAgIHN3YXAKICAgIGNvbmNhdAogICAgLy8gY29udHJhY3QucHk6MjgKICAgIC8vIEBhYmltZXRob2QKICAgIGJ5dGVjXzAgLy8gMHgxNTFmN2M3NQogICAgc3dhcAogICAgY29uY2F0CiAgICBsb2cKICAgIGludGNfMCAvLyAxCiAgICByZXR1cm4KCgovLyBjb250cmFjdC5UZXN0LnRlc3RfYmlnaW50X3dfcGFkZGluZ1tyb3V0aW5nXSgpIC0+IHZvaWQ6CnRlc3RfYmlnaW50X3dfcGFkZGluZzoKICAgIC8vIGNvbnRyYWN0LnB5OjM1CiAgICAvLyBAYWJpbWV0aG9kCiAgICB0eG5hIEFwcGxpY2F0aW9uQXJncyAxCiAgICBleHRyYWN0IDIgMAogICAgLy8gY29udHJhY3QucHk6MzcKICAgIC8vIGJ5dGVzX2xlbmd0aCA9IGJ5dGVzXzEubGVuZ3RoCiAgICBkdXAKICAgIGxlbgogICAgLy8gY29udHJhY3QucHk6MzgKICAgIC8vIHVpbnQyNTZfcGFkZGluZ19sZW5ndGhfbmVlZGVkID0gVUludDY0KDMyKSAtIGJ5dGVzX2xlbmd0aAogICAgaW50Y18yIC8vIDMyCiAgICBzd2FwCiAgICAtCiAgICAvLyBjb250cmFjdC5weTozOQogICAgLy8gcGFkZGVkX2J5dGVzID0gb3AuYnplcm8odWludDI1Nl9wYWRkaW5nX2xlbmd0aF9uZWVkZWQpICsgYnl0ZXNfMQogICAgYnplcm8KICAgIHN3YXAKICAgIGNvbmNhdAogICAgLy8gY29udHJhY3QucHk6MzUKICAgIC8vIEBhYmltZXRob2QKICAgIGR1cAogICAgbGVuCiAgICBpbnRjXzEgLy8gNjQKICAgIDw9CiAgICBhc3NlcnQgLy8gb3ZlcmZsb3cKICAgIGludGNfMSAvLyA2NAogICAgYnplcm8KICAgIGJ8CiAgICBieXRlY18wIC8vIDB4MTUxZjdjNzUKICAgIHN3YXAKICAgIGNvbmNhdAogICAgbG9nCiAgICBpbnRjXzAgLy8gMQogICAgcmV0dXJuCg==",
+        "clear": "I3ByYWdtYSB2ZXJzaW9uIDExCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBhbGdvcHkuYXJjNC5BUkM0Q29udHJhY3QuY2xlYXJfc3RhdGVfcHJvZ3JhbSgpIC0+IHVpbnQ2NDoKbWFpbjoKICAgIHB1c2hpbnQgMSAvLyAxCiAgICByZXR1cm4K"
+    },
+    "byteCode": {
+        "approval": "CyADAUAgJgEEFR98dTEbQQA5MRkURDEYRIIGBLg3ItkEGD4PbQRkY6uEBPier4IEWDiyvgTc+Vg4NhoAjgYACQAVACEANQBKAF4AMRkUMRgUEEM2GgFXAgAoTFCwIkM2GgFXAgAoTFCwIkM2GgFXAgBJFSMORCOvqyhMULAiQzYaAVcCAEkVgQhMCa9MUChMULAiQzYaAVcCAEkVJEwJr0xQKExQsCJDNhoBVwIASRUkTAmvTFBJFSMORCOvqyhMULAiQw==",
+        "clear": "C4EBQw=="
+    },
+    "compilerInfo": {
+        "compiler": "puya",
+        "compilerVersion": {
+            "major": 5,
+            "minor": 0,
+            "patch": 1
+        }
+    },
+    "events": [],
+    "templateVariables": {}
+}

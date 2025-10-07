@@ -1,0 +1,176 @@
+#pragma version 11
+#pragma typetrack false
+
+// algopy.arc4.ARC4Contract.approval_program() -> uint64:
+main:
+    intcblock 1 64 32
+    bytecblock 0x151f7c75
+    // contract.py:5
+    // class Test(ARC4Contract):
+    txn NumAppArgs
+    bz main___algopy_default_create@15
+    txn OnCompletion
+    !
+    assert // OnCompletion must be NoOp
+    txn ApplicationID
+    assert
+    pushbytess 0xb83722d9 0x183e0f6d 0x6463ab84 0xf89eaf82 0x5838b2be 0xdcf95838 // method "test_arc4_uint64(byte[])uint64", method "test_arc4_uint256(byte[])uint256", method "test_biguint(byte[])uint512", method "test_arc4_uint64_w_padding(byte[])uint64", method "test_arc4_uint256_w_padding(byte[])uint256", method "test_bigint_w_padding(byte[])uint512"
+    txna ApplicationArgs 0
+    match test_arc4_uint64 test_arc4_uint256 test_biguint test_arc4_uint64_w_padding test_arc4_uint256_w_padding test_bigint_w_padding
+    err
+
+main___algopy_default_create@15:
+    txn OnCompletion
+    !
+    txn ApplicationID
+    !
+    &&
+    return // on error: OnCompletion must be NoOp && can only call when creating
+
+
+// contract.Test.test_arc4_uint64[routing]() -> void:
+test_arc4_uint64:
+    // contract.py:9
+    // @abimethod
+    txna ApplicationArgs 1
+    extract 2 0
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+
+// contract.Test.test_arc4_uint256[routing]() -> void:
+test_arc4_uint256:
+    // contract.py:13
+    // @abimethod
+    txna ApplicationArgs 1
+    extract 2 0
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+
+// contract.Test.test_biguint[routing]() -> void:
+test_biguint:
+    // contract.py:17
+    // @abimethod
+    txna ApplicationArgs 1
+    extract 2 0
+    dup
+    len
+    intc_1 // 64
+    <=
+    assert // overflow
+    intc_1 // 64
+    bzero
+    b|
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+
+// contract.Test.test_arc4_uint64_w_padding[routing]() -> void:
+test_arc4_uint64_w_padding:
+    // contract.py:21
+    // @abimethod
+    txna ApplicationArgs 1
+    extract 2 0
+    // contract.py:23
+    // bytes_length = bytes_1.length
+    dup
+    len
+    // contract.py:24
+    // uint64_padding_length_needed = UInt64(8) - bytes_length
+    pushint 8 // 8
+    swap
+    -
+    // contract.py:25
+    // padded_bytes = op.bzero(uint64_padding_length_needed) + bytes_1
+    bzero
+    swap
+    concat
+    // contract.py:21
+    // @abimethod
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+
+// contract.Test.test_arc4_uint256_w_padding[routing]() -> void:
+test_arc4_uint256_w_padding:
+    // contract.py:28
+    // @abimethod
+    txna ApplicationArgs 1
+    extract 2 0
+    // contract.py:30
+    // bytes_length = bytes_1.length
+    dup
+    len
+    // contract.py:31
+    // uint256_padding_length_needed = UInt64(32) - bytes_length
+    intc_2 // 32
+    swap
+    -
+    // contract.py:32
+    // padded_bytes = op.bzero(uint256_padding_length_needed) + bytes_1
+    bzero
+    swap
+    concat
+    // contract.py:28
+    // @abimethod
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+
+// contract.Test.test_bigint_w_padding[routing]() -> void:
+test_bigint_w_padding:
+    // contract.py:35
+    // @abimethod
+    txna ApplicationArgs 1
+    extract 2 0
+    // contract.py:37
+    // bytes_length = bytes_1.length
+    dup
+    len
+    // contract.py:38
+    // uint256_padding_length_needed = UInt64(32) - bytes_length
+    intc_2 // 32
+    swap
+    -
+    // contract.py:39
+    // padded_bytes = op.bzero(uint256_padding_length_needed) + bytes_1
+    bzero
+    swap
+    concat
+    // contract.py:35
+    // @abimethod
+    dup
+    len
+    intc_1 // 64
+    <=
+    assert // overflow
+    intc_1 // 64
+    bzero
+    b|
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
