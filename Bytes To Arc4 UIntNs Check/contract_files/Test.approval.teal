@@ -4,22 +4,36 @@
 // algopy.arc4.ARC4Contract.approval_program() -> uint64:
 main:
     intcblock 1 64 32
-    bytecblock 0x151f7c75
+    bytecblock 0x151f7c75 "test_global_1" "test_global_2"
+    txn ApplicationID
+    bnz main_after_if_else@2
+    // contract.py:8
+    // self.test_global_1 = arc4.UInt64()
+    bytec_1 // "test_global_1"
+    pushbytes 0x0000000000000000
+    app_global_put
+    // contract.py:9
+    // self.test_global_2 = arc4.UInt256()
+    bytec_2 // "test_global_2"
+    pushbytes 0x0000000000000000000000000000000000000000000000000000000000000000
+    app_global_put
+
+main_after_if_else@2:
     // contract.py:5
     // class Test(ARC4Contract):
     txn NumAppArgs
-    bz main___algopy_default_create@18
+    bz main___algopy_default_create@20
     txn OnCompletion
     !
     assert // OnCompletion must be NoOp
     txn ApplicationID
     assert
-    pushbytess 0xb83722d9 0x183e0f6d 0x6463ab84 0xf89eaf82 0x5838b2be 0xdcf95838 0x8359088c 0x48ed7393 0xa812ecf2 // method "test_arc4_uint64(byte[])uint64", method "test_arc4_uint256(byte[])uint256", method "test_biguint(byte[])uint512", method "test_arc4_uint64_w_padding(byte[])uint64", method "test_arc4_uint256_w_padding(byte[])uint256", method "test_bigint_w_padding(byte[])uint512", method "test_math_on_unresolved_arc4_uint64(byte[])uint64", method "test_storage_on_resolved_arc4_uint64(byte[],pay)void", method "get_mbr()uint64"
+    pushbytess 0xb83722d9 0x183e0f6d 0x6463ab84 0xf89eaf82 0x5838b2be 0xdcf95838 0x8359088c 0x48ed7393 0xa812ecf2 0x0300a005 0x816613ad // method "test_arc4_uint64(byte[])uint64", method "test_arc4_uint256(byte[])uint256", method "test_biguint(byte[])uint512", method "test_arc4_uint64_w_padding(byte[])uint64", method "test_arc4_uint256_w_padding(byte[])uint256", method "test_bigint_w_padding(byte[])uint512", method "test_math_on_unresolved_arc4_uint64(byte[])uint64", method "test_storage_on_resolved_arc4_uint64(byte[],pay)void", method "get_mbr()uint64", method "set_arc4_uint64_int_as_global(byte[])void", method "set_arc4_uint256_int_as_global(byte[])void"
     txna ApplicationArgs 0
-    match test_arc4_uint64 test_arc4_uint256 test_biguint test_arc4_uint64_w_padding test_arc4_uint256_w_padding test_bigint_w_padding test_math_on_unresolved_arc4_uint64 test_storage_on_resolved_arc4_uint64 get_mbr
+    match test_arc4_uint64 test_arc4_uint256 test_biguint test_arc4_uint64_w_padding test_arc4_uint256_w_padding test_bigint_w_padding test_math_on_unresolved_arc4_uint64 test_storage_on_resolved_arc4_uint64 get_mbr set_arc4_uint64_int_as_global set_arc4_uint256_int_as_global
     err
 
-main___algopy_default_create@18:
+main___algopy_default_create@20:
     txn OnCompletion
     !
     txn ApplicationID
@@ -30,7 +44,7 @@ main___algopy_default_create@18:
 
 // contract.Test.test_arc4_uint64[routing]() -> void:
 test_arc4_uint64:
-    // contract.py:10
+    // contract.py:12
     // @abimethod
     txna ApplicationArgs 1
     extract 2 0
@@ -44,7 +58,7 @@ test_arc4_uint64:
 
 // contract.Test.test_arc4_uint256[routing]() -> void:
 test_arc4_uint256:
-    // contract.py:14
+    // contract.py:16
     // @abimethod
     txna ApplicationArgs 1
     extract 2 0
@@ -58,7 +72,7 @@ test_arc4_uint256:
 
 // contract.Test.test_biguint[routing]() -> void:
 test_biguint:
-    // contract.py:18
+    // contract.py:20
     // @abimethod
     txna ApplicationArgs 1
     extract 2 0
@@ -80,25 +94,25 @@ test_biguint:
 
 // contract.Test.test_arc4_uint64_w_padding[routing]() -> void:
 test_arc4_uint64_w_padding:
-    // contract.py:22
+    // contract.py:24
     // @abimethod
     txna ApplicationArgs 1
     extract 2 0
-    // contract.py:24
+    // contract.py:26
     // bytes_length = bytes_1.length
     dup
     len
-    // contract.py:25
+    // contract.py:27
     // uint64_padding_length_needed = UInt64(8) - bytes_length
     pushint 8 // 8
     swap
     -
-    // contract.py:26
+    // contract.py:28
     // padded_bytes = op.bzero(uint64_padding_length_needed) + bytes_1
     bzero
     swap
     concat
-    // contract.py:22
+    // contract.py:24
     // @abimethod
     bytec_0 // 0x151f7c75
     swap
@@ -110,25 +124,25 @@ test_arc4_uint64_w_padding:
 
 // contract.Test.test_arc4_uint256_w_padding[routing]() -> void:
 test_arc4_uint256_w_padding:
-    // contract.py:29
+    // contract.py:31
     // @abimethod
     txna ApplicationArgs 1
     extract 2 0
-    // contract.py:31
+    // contract.py:33
     // bytes_length = bytes_1.length
     dup
     len
-    // contract.py:32
+    // contract.py:34
     // uint256_padding_length_needed = UInt64(32) - bytes_length
     intc_2 // 32
     swap
     -
-    // contract.py:33
+    // contract.py:35
     // padded_bytes = op.bzero(uint256_padding_length_needed) + bytes_1
     bzero
     swap
     concat
-    // contract.py:29
+    // contract.py:31
     // @abimethod
     bytec_0 // 0x151f7c75
     swap
@@ -140,25 +154,25 @@ test_arc4_uint256_w_padding:
 
 // contract.Test.test_bigint_w_padding[routing]() -> void:
 test_bigint_w_padding:
-    // contract.py:36
+    // contract.py:38
     // @abimethod
     txna ApplicationArgs 1
     extract 2 0
-    // contract.py:38
+    // contract.py:40
     // bytes_length = bytes_1.length
     dup
     len
-    // contract.py:39
+    // contract.py:41
     // uint256_padding_length_needed = UInt64(32) - bytes_length
     intc_2 // 32
     swap
     -
-    // contract.py:40
+    // contract.py:42
     // padded_bytes = op.bzero(uint256_padding_length_needed) + bytes_1
     bzero
     swap
     concat
-    // contract.py:36
+    // contract.py:38
     // @abimethod
     dup
     len
@@ -178,16 +192,16 @@ test_bigint_w_padding:
 
 // contract.Test.test_math_on_unresolved_arc4_uint64[routing]() -> void:
 test_math_on_unresolved_arc4_uint64:
-    // contract.py:43
+    // contract.py:45
     // @abimethod
     txna ApplicationArgs 1
     extract 2 0
-    // contract.py:45
+    // contract.py:47
     // return arc4.UInt64.from_bytes(bytes_1).as_uint64() + UInt64(1)
     btoi
     intc_0 // 1
     +
-    // contract.py:43
+    // contract.py:45
     // @abimethod
     itob
     bytec_0 // 0x151f7c75
@@ -200,7 +214,7 @@ test_math_on_unresolved_arc4_uint64:
 
 // contract.Test.test_storage_on_resolved_arc4_uint64[routing]() -> void:
 test_storage_on_resolved_arc4_uint64:
-    // contract.py:47
+    // contract.py:49
     // @abimethod
     txna ApplicationArgs 1
     extract 2 0
@@ -212,12 +226,12 @@ test_storage_on_resolved_arc4_uint64:
     intc_0 // pay
     ==
     assert // transaction type is pay
-    // contract.py:59
+    // contract.py:61
     // return Global.current_application_address.min_balance
     global CurrentApplicationAddress
     acct_params_get AcctMinBalance
     assert // account funded
-    // contract.py:50
+    // contract.py:52
     // self.test_storage[arc4.UInt64.from_bytes(bytes_1)] = String('')
     dig 2
     box_del
@@ -225,21 +239,21 @@ test_storage_on_resolved_arc4_uint64:
     uncover 2
     pushbytes ""
     box_put
-    // contract.py:59
+    // contract.py:61
     // return Global.current_application_address.min_balance
     global CurrentApplicationAddress
     acct_params_get AcctMinBalance
     assert // account funded
-    // contract.py:52-55
+    // contract.py:54-57
     // itxn.Payment(
     //     receiver=Txn.sender,
     //     amount=mbr_payment.amount - (post_mbr - pre_mbr)
     // ).submit()
     itxn_begin
-    // contract.py:53
+    // contract.py:55
     // receiver=Txn.sender,
     txn Sender
-    // contract.py:54
+    // contract.py:56
     // amount=mbr_payment.amount - (post_mbr - pre_mbr)
     uncover 3
     gtxns Amount
@@ -249,19 +263,19 @@ test_storage_on_resolved_arc4_uint64:
     -
     itxn_field Amount
     itxn_field Receiver
-    // contract.py:52
+    // contract.py:54
     // itxn.Payment(
     intc_0 // pay
     itxn_field TypeEnum
     pushint 0 // 0
     itxn_field Fee
-    // contract.py:52-55
+    // contract.py:54-57
     // itxn.Payment(
     //     receiver=Txn.sender,
     //     amount=mbr_payment.amount - (post_mbr - pre_mbr)
     // ).submit()
     itxn_submit
-    // contract.py:47
+    // contract.py:49
     // @abimethod
     intc_0 // 1
     return
@@ -269,17 +283,51 @@ test_storage_on_resolved_arc4_uint64:
 
 // contract.Test.get_mbr[routing]() -> void:
 get_mbr:
-    // contract.py:59
+    // contract.py:61
     // return Global.current_application_address.min_balance
     global CurrentApplicationAddress
     acct_params_get AcctMinBalance
     assert // account funded
-    // contract.py:57
+    // contract.py:59
     // @abimethod
     itob
     bytec_0 // 0x151f7c75
     swap
     concat
     log
+    intc_0 // 1
+    return
+
+
+// contract.Test.set_arc4_uint64_int_as_global[routing]() -> void:
+set_arc4_uint64_int_as_global:
+    // contract.py:63
+    // @abimethod
+    txna ApplicationArgs 1
+    extract 2 0
+    // contract.py:65
+    // self.test_global_1 = arc4.UInt64.from_bytes(bytes_1)
+    bytec_1 // "test_global_1"
+    swap
+    app_global_put
+    // contract.py:63
+    // @abimethod
+    intc_0 // 1
+    return
+
+
+// contract.Test.set_arc4_uint256_int_as_global[routing]() -> void:
+set_arc4_uint256_int_as_global:
+    // contract.py:67
+    // @abimethod
+    txna ApplicationArgs 1
+    extract 2 0
+    // contract.py:69
+    // self.test_global_2 = arc4.UInt256.from_bytes(bytes_1)
+    bytec_2 // "test_global_2"
+    swap
+    app_global_put
+    // contract.py:67
+    // @abimethod
     intc_0 // 1
     return

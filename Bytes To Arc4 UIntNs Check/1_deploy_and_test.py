@@ -8,9 +8,9 @@ from contract_files.TestClient import (
     TestArc4Uint256WPaddingArgs, 
     TestBigintWPaddingArgs,
     TestMathOnUnresolvedArc4Uint64Args,
-    TestStorageOnResolvedArc4Uint64Args
-    #TestArc4TypesArgs, 
-    # TestArc4TypesWithPaddingArgs
+    TestStorageOnResolvedArc4Uint64Args,
+    SetArc4Uint64IntAsGlobalArgs,
+    SetArc4Uint256IntAsGlobalArgs
 )
 from dotenv import load_dotenv
 import os
@@ -150,6 +150,27 @@ group.test_storage_on_resolved_arc4_uint64(
         max_fee=AlgoAmount(micro_algo=2000)
     ),
 )
+
+group.set_arc4_uint64_int_as_global(
+    args=SetArc4Uint64IntAsGlobalArgs(
+        bytes_1=(555).to_bytes(7, 'big'),
+    ),
+    params=CommonAppCallParams(
+        validity_window=1000,
+        max_fee=AlgoAmount(micro_algo=2000)
+    ),
+)
+
+group.set_arc4_uint256_int_as_global(
+    args=SetArc4Uint256IntAsGlobalArgs(
+        bytes_1=(555).to_bytes(7, 'big'),
+    ),
+    params=CommonAppCallParams(
+        validity_window=1000,
+        max_fee=AlgoAmount(micro_algo=2000)
+    ),
+)
+
 txn_response = group.send(
     send_params={
         'populate_app_call_resources': True,
@@ -157,7 +178,7 @@ txn_response = group.send(
     }
 )
 
-print(f'All returns should be 555, the last return should be 556, Returns: {[abi_return.value for abi_return in txn_response.returns]}')
+print(f'All returns should be 555, the last return should be 556, last 3 app calls that adjust box storage and global state ignored, Returns: {[abi_return.value for abi_return in txn_response.returns][:-3]}')
 
 try:
     box_name_abi_type = ABIType.from_string('uint64')
@@ -168,3 +189,9 @@ except Exception as e:
     print(e)
     print(f'arc4.UInt64 was stored as {len(box_name_raw)} bytes and cannot be decoded as uint64')
 
+global_states = algorand.app.get_global_state(test_contract_client.app_id)
+global_state_1 = global_states.get('test_global_1')
+global_state_2 = global_states.get('test_global_2')
+
+print(f'global_state_1 Value/Value Raw: {global_state_1.value} and {global_state_1.value_raw}')
+print(f'global_state_2 Value/Value Raw: {global_state_2.value} and {global_state_2.value_raw}')

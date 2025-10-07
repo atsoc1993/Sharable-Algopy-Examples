@@ -6,7 +6,7 @@ class Test(ARC4Contract):
     def __init__(self) -> None:
         self.test_storage = BoxMap(arc4.UInt64, String, key_prefix='')
         self.test_global_1 = arc4.UInt64()
-        self.test_global_2 = arc4.UInt64()
+        self.test_global_2 = arc4.UInt256()
         pass
 
     @abimethod
@@ -66,4 +66,4 @@ class Test(ARC4Contract):
 
     @abimethod
     def set_arc4_uint256_int_as_global(self, bytes_1: Bytes) -> None:
-        self.test_global_1 = arc4.UInt256.from_bytes(bytes_1)
+        self.test_global_2 = arc4.UInt256.from_bytes(bytes_1)
