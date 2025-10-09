@@ -1,0 +1,751 @@
+#pragma version 11
+#pragma typetrack false
+
+// algopy.arc4.ARC4Contract.approval_program() -> uint64:
+main:
+    intcblock 2 1 0 8
+    bytecblock "t1" "t2" 0x151f7c75 0x0000000000000000
+    // contract.py:23
+    // class Test(ARC4Contract):
+    txn NumAppArgs
+    bz main___algopy_default_create@17
+    txn OnCompletion
+    !
+    assert // OnCompletion must be NoOp
+    txn ApplicationID
+    assert
+    pushbytess 0xc4fc08f7 0x2511849c 0x45b0eabe 0x83d521b5 0xa843f6fb 0x4916b59f 0x9ed5ee8b 0x2a16c465 // method "write_box(uint64,uint256,byte[],uint64[],uint64,pay)void", method "get_item_by_index_in_uint64_array(uint64)uint64", method "find_item_index_in_uint64_array(uint64)(uint64,uint64)", method "adjust_item_at_index(uint64,uint64)void", method "dynamic_array_of_structs_write_box((uint64,uint256,byte[],uint64[],uint64)[],pay)void", method "dynamic_array_of_structs_get_item_by_index_in_uint64_array(uint64,uint64)uint64", method "dynamic_array_of_structs_find_item_index_in_uint64_array(uint64,uint64)(uint64,uint64)", method "dynamic_array_of_structs_adjust_item_at_index(uint64,uint64,uint64)void"
+    txna ApplicationArgs 0
+    match write_box get_item_by_index_in_uint64_array find_item_index_in_uint64_array adjust_item_at_index dynamic_array_of_structs_write_box dynamic_array_of_structs_get_item_by_index_in_uint64_array dynamic_array_of_structs_find_item_index_in_uint64_array dynamic_array_of_structs_adjust_item_at_index
+    err
+
+main___algopy_default_create@17:
+    txn OnCompletion
+    !
+    txn ApplicationID
+    !
+    &&
+    return // on error: OnCompletion must be NoOp && can only call when creating
+
+
+// contract.refund_excess_mbr(excess: uint64) -> void:
+refund_excess_mbr:
+    // contract.py:16-17
+    // @subroutine
+    // def refund_excess_mbr(excess: UInt64) -> None:
+    proto 1 0
+    // contract.py:18-21
+    // itxn.Payment(
+    //     receiver=Txn.sender,
+    //     amount=excess
+    // ).submit()
+    itxn_begin
+    // contract.py:19
+    // receiver=Txn.sender,
+    txn Sender
+    frame_dig -1
+    itxn_field Amount
+    itxn_field Receiver
+    // contract.py:18
+    // itxn.Payment(
+    intc_1 // pay
+    itxn_field TypeEnum
+    intc_2 // 0
+    itxn_field Fee
+    // contract.py:18-21
+    // itxn.Payment(
+    //     receiver=Txn.sender,
+    //     amount=excess
+    // ).submit()
+    itxn_submit
+    retsub
+
+
+// contract.Test.write_box[routing]() -> void:
+write_box:
+    // contract.py:28
+    // @abimethod
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    txna ApplicationArgs 5
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // contract.py:40-46
+    // box_value = SomeStruct(
+    //     uint64_1=uint64_1,
+    //     uint256_1=uint256_1,
+    //     unknown_length_byte_array=unknown_length_byte_array.copy(),
+    //     unknown_length_uint64_array=unknown_length_uint64_array.copy(),
+    //     uint64_2=uint64_2
+    // )
+    uncover 5
+    uncover 5
+    concat
+    pushbytes 0x0034
+    concat
+    dig 4
+    len
+    pushint 52 // 52
+    +
+    itob
+    extract 6 2
+    concat
+    uncover 2
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    // contract.py:14
+    // return Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // contract.py:49
+    // self.test_box_map[Txn.sender] = box_value.copy()
+    bytec_0 // "t1"
+    txn Sender
+    concat
+    dup
+    box_del
+    pop
+    uncover 2
+    box_put
+    // contract.py:14
+    // return Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // contract.py:52
+    // mbr_needed = post_mbr - pre_mbr
+    swap
+    -
+    // contract.py:53
+    // excess_mbr_funded = mbr_payment.amount - mbr_needed
+    swap
+    gtxns Amount
+    swap
+    -
+    // contract.py:54
+    // refund_excess_mbr(excess=excess_mbr_funded)
+    callsub refund_excess_mbr
+    // contract.py:28
+    // @abimethod
+    intc_1 // 1
+    return
+
+
+// contract.Test.get_item_by_index_in_uint64_array[routing]() -> void:
+get_item_by_index_in_uint64_array:
+    // contract.py:57
+    // @abimethod
+    txna ApplicationArgs 1
+    btoi
+    // contract.py:59
+    // box_value = self.test_box_map[Txn.sender].copy()
+    bytec_0 // "t1"
+    txn Sender
+    concat
+    // contract.py:59-60
+    // box_value = self.test_box_map[Txn.sender].copy()
+    // return box_value.unknown_length_uint64_array[index]
+    dup
+    pushint 42 // 42
+    intc_0 // 2
+    box_extract
+    btoi
+    intc_0 // 2
+    +
+    uncover 2
+    intc_3 // 8
+    *
+    +
+    intc_3 // 8
+    box_extract
+    // contract.py:57
+    // @abimethod
+    bytec_2 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+
+// contract.Test.find_item_index_in_uint64_array[routing]() -> void:
+find_item_index_in_uint64_array:
+    intc_2 // 0
+    dup
+    // contract.py:62
+    // @abimethod
+    txna ApplicationArgs 1
+    // contract.py:64
+    // box_value = self.test_box_map[Txn.sender].copy()
+    bytec_0 // "t1"
+    txn Sender
+    concat
+    dupn 2
+    // contract.py:64-66
+    // box_value = self.test_box_map[Txn.sender].copy()
+    // uint64_dynamic_array = box_value.unknown_length_uint64_array.copy()
+    // for i in urange(box_value.unknown_length_uint64_array.length):
+    pushint 42 // 42
+    intc_0 // 2
+    box_extract
+    btoi
+    intc_0 // 2
+    box_extract
+    btoi
+    // contract.py:66
+    // for i in urange(box_value.unknown_length_uint64_array.length):
+    intc_2 // 0
+
+find_item_index_in_uint64_array_for_header@2:
+    // contract.py:66
+    // for i in urange(box_value.unknown_length_uint64_array.length):
+    dup
+    dig 2
+    <
+    bz find_item_index_in_uint64_array_after_for@7
+    // contract.py:67
+    // if uint64_dynamic_array[i] == target_uint64:
+    dig 2
+    dup
+    pushint 42 // 42
+    intc_0 // 2
+    box_extract
+    btoi
+    intc_0 // 2
+    +
+    dig 2
+    intc_3 // 8
+    *
+    +
+    intc_3 // 8
+    box_extract
+    dup
+    bury 7
+    dig 4
+    b==
+    bz find_item_index_in_uint64_array_after_if_else@5
+    dup
+    dig 6
+    bury 6
+
+find_item_index_in_uint64_array_after_inlined_contract.Test.find_item_index_in_uint64_array@8:
+    // contract.py:62
+    // @abimethod
+    itob
+    dig 5
+    swap
+    concat
+    bytec_2 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+find_item_index_in_uint64_array_after_if_else@5:
+    // contract.py:66
+    // for i in urange(box_value.unknown_length_uint64_array.length):
+    dup
+    intc_1 // 1
+    +
+    bury 1
+    b find_item_index_in_uint64_array_for_header@2
+
+find_item_index_in_uint64_array_after_for@7:
+    // contract.py:70
+    // return arc4.UInt64(0), UInt64(0)
+    intc_2 // 0
+    bytec_3 // 0x0000000000000000
+    bury 6
+    // contract.py:62
+    // @abimethod
+    b find_item_index_in_uint64_array_after_inlined_contract.Test.find_item_index_in_uint64_array@8
+
+
+// contract.Test.adjust_item_at_index[routing]() -> void:
+adjust_item_at_index:
+    // contract.py:72
+    // @abimethod
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    // contract.py:74
+    // box_value = self.test_box_map[Txn.sender].copy()
+    bytec_0 // "t1"
+    txn Sender
+    concat
+    box_get
+    assert // check self.test_box_map entry exists
+    // contract.py:75
+    // uint64_dynamic_array = box_value.unknown_length_uint64_array.copy()
+    dup
+    pushint 42 // 42
+    extract_uint16
+    dig 1
+    len
+    dig 2
+    dig 2
+    uncover 2
+    substring3
+    // contract.py:76
+    // uint64_dynamic_array[index] = new_num
+    uncover 4
+    intc_3 // 8
+    *
+    intc_0 // 2
+    +
+    uncover 4
+    replace3 // on error: index access is out of bounds
+    // contract.py:77
+    // box_value.unknown_length_uint64_array = uint64_dynamic_array.copy()
+    uncover 2
+    intc_2 // 0
+    uncover 3
+    extract3
+    swap
+    concat
+    // contract.py:78
+    // self.test_box_map[Txn.sender] = box_value.copy()
+    bytec_0 // "t1"
+    txn Sender
+    concat
+    dup
+    box_del
+    pop
+    swap
+    box_put
+    // contract.py:72
+    // @abimethod
+    intc_1 // 1
+    return
+
+
+// contract.Test.dynamic_array_of_structs_write_box[routing]() -> void:
+dynamic_array_of_structs_write_box:
+    // contract.py:80
+    // @abimethod
+    txna ApplicationArgs 1
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // contract.py:14
+    // return Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // contract.py:83
+    // self.test_nested_struct_box_map[Txn.sender] = dynamic_structs.copy()
+    bytec_1 // "t2"
+    txn Sender
+    concat
+    dup
+    box_del
+    pop
+    uncover 3
+    box_put
+    // contract.py:14
+    // return Global.current_application_address.min_balance
+    global CurrentApplicationAddress
+    acct_params_get AcctMinBalance
+    assert // account funded
+    // contract.py:86
+    // mbr_needed = post_mbr - pre_mbr
+    swap
+    -
+    // contract.py:87
+    // excess_mbr_funded = mbr_payment.amount - mbr_needed
+    swap
+    gtxns Amount
+    swap
+    -
+    // contract.py:88
+    // refund_excess_mbr(excess=excess_mbr_funded)
+    callsub refund_excess_mbr
+    // contract.py:80
+    // @abimethod
+    intc_1 // 1
+    return
+
+
+// contract.Test.dynamic_array_of_structs_get_item_by_index_in_uint64_array[routing]() -> void:
+dynamic_array_of_structs_get_item_by_index_in_uint64_array:
+    // contract.py:90
+    // @abimethod
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    // contract.py:92
+    // box_value = self.test_nested_struct_box_map[Txn.sender].copy()
+    bytec_1 // "t2"
+    txn Sender
+    concat
+    // contract.py:92-94
+    // box_value = self.test_nested_struct_box_map[Txn.sender].copy()
+    // target_struct = box_value[struct_index].copy()
+    // return target_struct.unknown_length_uint64_array[index]
+    intc_0 // 2
+    uncover 3
+    *
+    intc_0 // 2
+    +
+    dig 1
+    swap
+    intc_0 // 2
+    box_extract
+    btoi
+    intc_0 // 2
+    +
+    dup
+    pushint 42 // 42
+    +
+    dig 2
+    swap
+    intc_0 // 2
+    box_extract
+    btoi
+    +
+    dup2
+    intc_0 // 2
+    box_extract
+    btoi
+    dig 3
+    >
+    assert // index out of bounds
+    intc_0 // 2
+    +
+    uncover 2
+    intc_3 // 8
+    *
+    +
+    intc_3 // 8
+    box_extract
+    // contract.py:90
+    // @abimethod
+    bytec_2 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+
+// contract.Test.dynamic_array_of_structs_find_item_index_in_uint64_array[routing]() -> void:
+dynamic_array_of_structs_find_item_index_in_uint64_array:
+    intc_2 // 0
+    dup
+    // contract.py:96
+    // @abimethod
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    swap
+    // contract.py:98
+    // box_value = self.test_nested_struct_box_map[Txn.sender].copy()
+    bytec_1 // "t2"
+    txn Sender
+    concat
+    dup
+    cover 2
+    // contract.py:98-101
+    // box_value = self.test_nested_struct_box_map[Txn.sender].copy()
+    // target_struct = box_value[struct_index].copy()
+    // uint64_dynamic_array = target_struct.unknown_length_uint64_array.copy()
+    // for i in urange(target_struct.unknown_length_uint64_array.length):
+    intc_0 // 2
+    uncover 2
+    *
+    intc_0 // 2
+    +
+    dup
+    cover 2
+    dig 1
+    swap
+    intc_0 // 2
+    box_extract
+    btoi
+    intc_0 // 2
+    +
+    dup
+    pushint 42 // 42
+    +
+    dig 2
+    swap
+    intc_0 // 2
+    box_extract
+    btoi
+    +
+    intc_0 // 2
+    box_extract
+    btoi
+    // contract.py:101
+    // for i in urange(target_struct.unknown_length_uint64_array.length):
+    intc_2 // 0
+
+dynamic_array_of_structs_find_item_index_in_uint64_array_for_header@2:
+    // contract.py:101
+    // for i in urange(target_struct.unknown_length_uint64_array.length):
+    dup
+    dig 2
+    <
+    bz dynamic_array_of_structs_find_item_index_in_uint64_array_after_for@7
+    // contract.py:102
+    // if uint64_dynamic_array[i] == target_uint64:
+    dig 3
+    dup
+    dig 4
+    intc_0 // 2
+    box_extract
+    btoi
+    intc_0 // 2
+    +
+    dup
+    pushint 42 // 42
+    +
+    dig 2
+    swap
+    intc_0 // 2
+    box_extract
+    btoi
+    +
+    dup2
+    intc_0 // 2
+    box_extract
+    btoi
+    dig 3
+    dup
+    uncover 2
+    <
+    assert // index out of bounds
+    swap
+    intc_0 // 2
+    +
+    swap
+    intc_3 // 8
+    *
+    +
+    intc_3 // 8
+    box_extract
+    dup
+    bury 8
+    dig 5
+    b==
+    bz dynamic_array_of_structs_find_item_index_in_uint64_array_after_if_else@5
+    dup
+    dig 7
+    bury 7
+
+dynamic_array_of_structs_find_item_index_in_uint64_array_after_inlined_contract.Test.dynamic_array_of_structs_find_item_index_in_uint64_array@8:
+    // contract.py:96
+    // @abimethod
+    itob
+    dig 6
+    swap
+    concat
+    bytec_2 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+dynamic_array_of_structs_find_item_index_in_uint64_array_after_if_else@5:
+    // contract.py:101
+    // for i in urange(target_struct.unknown_length_uint64_array.length):
+    dup
+    intc_1 // 1
+    +
+    bury 1
+    b dynamic_array_of_structs_find_item_index_in_uint64_array_for_header@2
+
+dynamic_array_of_structs_find_item_index_in_uint64_array_after_for@7:
+    // contract.py:105
+    // return arc4.UInt64(0), UInt64(0)
+    intc_2 // 0
+    bytec_3 // 0x0000000000000000
+    bury 7
+    // contract.py:96
+    // @abimethod
+    b dynamic_array_of_structs_find_item_index_in_uint64_array_after_inlined_contract.Test.dynamic_array_of_structs_find_item_index_in_uint64_array@8
+
+
+// contract.Test.dynamic_array_of_structs_adjust_item_at_index[routing]() -> void:
+dynamic_array_of_structs_adjust_item_at_index:
+    // contract.py:107
+    // @abimethod
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    // contract.py:109
+    // box_value = self.test_nested_struct_box_map[Txn.sender].copy()
+    bytec_1 // "t2"
+    txn Sender
+    concat
+    box_get
+    assert // check self.test_nested_struct_box_map entry exists
+    // contract.py:110-111
+    // target_struct = box_value[struct_index].copy()
+    // uint64_dynamic_array = target_struct.unknown_length_uint64_array.copy()
+    dup
+    extract 2 0
+    dig 1
+    intc_2 // 0
+    extract_uint16
+    dig 5
+    intc_0 // 2
+    *
+    dig 2
+    swap
+    extract_uint16
+    dig 6
+    intc_1 // 1
+    +
+    dig 2
+    dig 1
+    - // on error: index access is out of bounds
+    dig 4
+    len
+    uncover 2
+    intc_0 // 2
+    *
+    dig 5
+    dig 1
+    extract_uint16
+    dig 2
+    dig 1
+    uncover 5
+    select
+    dig 6
+    dig 5
+    uncover 2
+    substring3
+    dup
+    pushint 42 // 42
+    extract_uint16
+    dig 1
+    len
+    dig 2
+    dig 2
+    uncover 2
+    substring3
+    // contract.py:112
+    // uint64_dynamic_array[index] = new_num
+    uncover 11
+    intc_3 // 8
+    *
+    intc_0 // 2
+    +
+    uncover 11
+    replace3 // on error: index access is out of bounds
+    // contract.py:113
+    // box_value[struct_index].unknown_length_uint64_array = uint64_dynamic_array.copy()
+    uncover 2
+    intc_2 // 0
+    uncover 3
+    extract3
+    swap
+    concat
+    dig 8
+    uncover 6
+    <
+    assert // index access is out of bounds
+    uncover 6
+    substring 0 2
+    dup
+    cover 8
+    btoi
+    dup
+    uncover 8
+    -
+    intc_1 // 1
+    -
+    dig 5
+    uncover 4
+    uncover 2
+    select
+    dup
+    dig 6
+    -
+    cover 7
+    dig 2
+    len
+    cover 7
+    dig 6
+    intc_2 // 0
+    uncover 7
+    substring3
+    uncover 3
+    concat
+    uncover 5
+    uncover 2
+    uncover 5
+    substring3
+    concat
+    cover 2
+    intc_0 // 2
+    *
+    swap
+
+dynamic_array_of_structs_adjust_item_at_index_for_header@2:
+    dup
+    dig 2
+    <
+    bz dynamic_array_of_structs_adjust_item_at_index_after_for@4
+    dig 2
+    dup
+    dig 2
+    dup
+    cover 3
+    extract_uint16
+    dig 6
+    +
+    dig 7
+    -
+    itob
+    extract 6 2
+    dig 2
+    swap
+    replace3
+    bury 4
+    intc_0 // 2
+    +
+    bury 1
+    b dynamic_array_of_structs_adjust_item_at_index_for_header@2
+
+dynamic_array_of_structs_adjust_item_at_index_after_for@4:
+    dig 5
+    dig 3
+    concat
+    // contract.py:114
+    // self.test_nested_struct_box_map[Txn.sender] = box_value.copy()
+    bytec_1 // "t2"
+    txn Sender
+    concat
+    dup
+    box_del
+    pop
+    swap
+    box_put
+    // contract.py:107
+    // @abimethod
+    intc_1 // 1
+    return
