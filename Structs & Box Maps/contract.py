@@ -34,7 +34,6 @@ class Test(ARC4Contract):
         unknown_length_uint64_array: DynamicArray[arc4.UInt64],
         uint64_2: arc4.UInt64,
         mbr_payment: gtxn.PaymentTransaction
-
     ) -> None:
         
         box_value = SomeStruct(
