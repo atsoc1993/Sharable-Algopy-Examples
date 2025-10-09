@@ -1,0 +1,4 @@
+algokit_utils==4.2.1
+algopy==0.7.2
+py_algorand_sdk==2.9.0
+python-dotenv==1.1.1

@@ -78,7 +78,7 @@ write_box:
     intc_1 // pay
     ==
     assert // transaction type is pay
-    // contract.py:40-46
+    // contract.py:39-45
     // box_value = SomeStruct(
     //     uint64_1=uint64_1,
     //     uint256_1=uint256_1,
@@ -109,7 +109,7 @@ write_box:
     global CurrentApplicationAddress
     acct_params_get AcctMinBalance
     assert // account funded
-    // contract.py:49
+    // contract.py:48
     // self.test_box_map[Txn.sender] = box_value.copy()
     bytec_0 // "t1"
     txn Sender
@@ -124,17 +124,17 @@ write_box:
     global CurrentApplicationAddress
     acct_params_get AcctMinBalance
     assert // account funded
-    // contract.py:52
+    // contract.py:51
     // mbr_needed = post_mbr - pre_mbr
     swap
     -
-    // contract.py:53
+    // contract.py:52
     // excess_mbr_funded = mbr_payment.amount - mbr_needed
     swap
     gtxns Amount
     swap
     -
-    // contract.py:54
+    // contract.py:53
     // refund_excess_mbr(excess=excess_mbr_funded)
     callsub refund_excess_mbr
     // contract.py:28
@@ -145,16 +145,16 @@ write_box:
 
 // contract.Test.get_item_by_index_in_uint64_array[routing]() -> void:
 get_item_by_index_in_uint64_array:
-    // contract.py:57
+    // contract.py:56
     // @abimethod
     txna ApplicationArgs 1
     btoi
-    // contract.py:59
+    // contract.py:58
     // box_value = self.test_box_map[Txn.sender].copy()
     bytec_0 // "t1"
     txn Sender
     concat
-    // contract.py:59-60
+    // contract.py:58-59
     // box_value = self.test_box_map[Txn.sender].copy()
     // return box_value.unknown_length_uint64_array[index]
     dup
@@ -170,7 +170,7 @@ get_item_by_index_in_uint64_array:
     +
     intc_3 // 8
     box_extract
-    // contract.py:57
+    // contract.py:56
     // @abimethod
     bytec_2 // 0x151f7c75
     swap
@@ -184,16 +184,16 @@ get_item_by_index_in_uint64_array:
 find_item_index_in_uint64_array:
     intc_2 // 0
     dup
-    // contract.py:62
+    // contract.py:61
     // @abimethod
     txna ApplicationArgs 1
-    // contract.py:64
+    // contract.py:63
     // box_value = self.test_box_map[Txn.sender].copy()
     bytec_0 // "t1"
     txn Sender
     concat
     dupn 2
-    // contract.py:64-66
+    // contract.py:63-65
     // box_value = self.test_box_map[Txn.sender].copy()
     // uint64_dynamic_array = box_value.unknown_length_uint64_array.copy()
     // for i in urange(box_value.unknown_length_uint64_array.length):
@@ -204,18 +204,18 @@ find_item_index_in_uint64_array:
     intc_0 // 2
     box_extract
     btoi
-    // contract.py:66
+    // contract.py:65
     // for i in urange(box_value.unknown_length_uint64_array.length):
     intc_2 // 0
 
 find_item_index_in_uint64_array_for_header@2:
-    // contract.py:66
+    // contract.py:65
     // for i in urange(box_value.unknown_length_uint64_array.length):
     dup
     dig 2
     <
     bz find_item_index_in_uint64_array_after_for@7
-    // contract.py:67
+    // contract.py:66
     // if uint64_dynamic_array[i] == target_uint64:
     dig 2
     dup
@@ -241,7 +241,7 @@ find_item_index_in_uint64_array_for_header@2:
     bury 6
 
 find_item_index_in_uint64_array_after_inlined_contract.Test.find_item_index_in_uint64_array@8:
-    // contract.py:62
+    // contract.py:61
     // @abimethod
     itob
     dig 5
@@ -255,7 +255,7 @@ find_item_index_in_uint64_array_after_inlined_contract.Test.find_item_index_in_u
     return
 
 find_item_index_in_uint64_array_after_if_else@5:
-    // contract.py:66
+    // contract.py:65
     // for i in urange(box_value.unknown_length_uint64_array.length):
     dup
     intc_1 // 1
@@ -264,31 +264,31 @@ find_item_index_in_uint64_array_after_if_else@5:
     b find_item_index_in_uint64_array_for_header@2
 
 find_item_index_in_uint64_array_after_for@7:
-    // contract.py:70
+    // contract.py:69
     // return arc4.UInt64(0), UInt64(0)
     intc_2 // 0
     bytec_3 // 0x0000000000000000
     bury 6
-    // contract.py:62
+    // contract.py:61
     // @abimethod
     b find_item_index_in_uint64_array_after_inlined_contract.Test.find_item_index_in_uint64_array@8
 
 
 // contract.Test.adjust_item_at_index[routing]() -> void:
 adjust_item_at_index:
-    // contract.py:72
+    // contract.py:71
     // @abimethod
     txna ApplicationArgs 1
     btoi
     txna ApplicationArgs 2
-    // contract.py:74
+    // contract.py:73
     // box_value = self.test_box_map[Txn.sender].copy()
     bytec_0 // "t1"
     txn Sender
     concat
     box_get
     assert // check self.test_box_map entry exists
-    // contract.py:75
+    // contract.py:74
     // uint64_dynamic_array = box_value.unknown_length_uint64_array.copy()
     dup
     pushint 42 // 42
@@ -299,7 +299,7 @@ adjust_item_at_index:
     dig 2
     uncover 2
     substring3
-    // contract.py:76
+    // contract.py:75
     // uint64_dynamic_array[index] = new_num
     uncover 4
     intc_3 // 8
@@ -308,7 +308,7 @@ adjust_item_at_index:
     +
     uncover 4
     replace3 // on error: index access is out of bounds
-    // contract.py:77
+    // contract.py:76
     // box_value.unknown_length_uint64_array = uint64_dynamic_array.copy()
     uncover 2
     intc_2 // 0
@@ -316,7 +316,7 @@ adjust_item_at_index:
     extract3
     swap
     concat
-    // contract.py:78
+    // contract.py:77
     // self.test_box_map[Txn.sender] = box_value.copy()
     bytec_0 // "t1"
     txn Sender
@@ -326,7 +326,7 @@ adjust_item_at_index:
     pop
     swap
     box_put
-    // contract.py:72
+    // contract.py:71
     // @abimethod
     intc_1 // 1
     return
@@ -334,7 +334,7 @@ adjust_item_at_index:
 
 // contract.Test.dynamic_array_of_structs_write_box[routing]() -> void:
 dynamic_array_of_structs_write_box:
-    // contract.py:80
+    // contract.py:79
     // @abimethod
     txna ApplicationArgs 1
     txn GroupIndex
@@ -350,7 +350,7 @@ dynamic_array_of_structs_write_box:
     global CurrentApplicationAddress
     acct_params_get AcctMinBalance
     assert // account funded
-    // contract.py:83
+    // contract.py:82
     // self.test_nested_struct_box_map[Txn.sender] = dynamic_structs.copy()
     bytec_1 // "t2"
     txn Sender
@@ -365,20 +365,20 @@ dynamic_array_of_structs_write_box:
     global CurrentApplicationAddress
     acct_params_get AcctMinBalance
     assert // account funded
-    // contract.py:86
+    // contract.py:85
     // mbr_needed = post_mbr - pre_mbr
     swap
     -
-    // contract.py:87
+    // contract.py:86
     // excess_mbr_funded = mbr_payment.amount - mbr_needed
     swap
     gtxns Amount
     swap
     -
-    // contract.py:88
+    // contract.py:87
     // refund_excess_mbr(excess=excess_mbr_funded)
     callsub refund_excess_mbr
-    // contract.py:80
+    // contract.py:79
     // @abimethod
     intc_1 // 1
     return
@@ -386,18 +386,18 @@ dynamic_array_of_structs_write_box:
 
 // contract.Test.dynamic_array_of_structs_get_item_by_index_in_uint64_array[routing]() -> void:
 dynamic_array_of_structs_get_item_by_index_in_uint64_array:
-    // contract.py:90
+    // contract.py:89
     // @abimethod
     txna ApplicationArgs 1
     btoi
     txna ApplicationArgs 2
     btoi
-    // contract.py:92
+    // contract.py:91
     // box_value = self.test_nested_struct_box_map[Txn.sender].copy()
     bytec_1 // "t2"
     txn Sender
     concat
-    // contract.py:92-94
+    // contract.py:91-93
     // box_value = self.test_nested_struct_box_map[Txn.sender].copy()
     // target_struct = box_value[struct_index].copy()
     // return target_struct.unknown_length_uint64_array[index]
@@ -437,7 +437,7 @@ dynamic_array_of_structs_get_item_by_index_in_uint64_array:
     +
     intc_3 // 8
     box_extract
-    // contract.py:90
+    // contract.py:89
     // @abimethod
     bytec_2 // 0x151f7c75
     swap
@@ -451,20 +451,20 @@ dynamic_array_of_structs_get_item_by_index_in_uint64_array:
 dynamic_array_of_structs_find_item_index_in_uint64_array:
     intc_2 // 0
     dup
-    // contract.py:96
+    // contract.py:95
     // @abimethod
     txna ApplicationArgs 1
     btoi
     txna ApplicationArgs 2
     swap
-    // contract.py:98
+    // contract.py:97
     // box_value = self.test_nested_struct_box_map[Txn.sender].copy()
     bytec_1 // "t2"
     txn Sender
     concat
     dup
     cover 2
-    // contract.py:98-101
+    // contract.py:97-100
     // box_value = self.test_nested_struct_box_map[Txn.sender].copy()
     // target_struct = box_value[struct_index].copy()
     // uint64_dynamic_array = target_struct.unknown_length_uint64_array.copy()
@@ -495,18 +495,18 @@ dynamic_array_of_structs_find_item_index_in_uint64_array:
     intc_0 // 2
     box_extract
     btoi
-    // contract.py:101
+    // contract.py:100
     // for i in urange(target_struct.unknown_length_uint64_array.length):
     intc_2 // 0
 
 dynamic_array_of_structs_find_item_index_in_uint64_array_for_header@2:
-    // contract.py:101
+    // contract.py:100
     // for i in urange(target_struct.unknown_length_uint64_array.length):
     dup
     dig 2
     <
     bz dynamic_array_of_structs_find_item_index_in_uint64_array_after_for@7
-    // contract.py:102
+    // contract.py:101
     // if uint64_dynamic_array[i] == target_uint64:
     dig 3
     dup
@@ -553,7 +553,7 @@ dynamic_array_of_structs_find_item_index_in_uint64_array_for_header@2:
     bury 7
 
 dynamic_array_of_structs_find_item_index_in_uint64_array_after_inlined_contract.Test.dynamic_array_of_structs_find_item_index_in_uint64_array@8:
-    // contract.py:96
+    // contract.py:95
     // @abimethod
     itob
     dig 6
@@ -567,7 +567,7 @@ dynamic_array_of_structs_find_item_index_in_uint64_array_after_inlined_contract.
     return
 
 dynamic_array_of_structs_find_item_index_in_uint64_array_after_if_else@5:
-    // contract.py:101
+    // contract.py:100
     // for i in urange(target_struct.unknown_length_uint64_array.length):
     dup
     intc_1 // 1
@@ -576,33 +576,33 @@ dynamic_array_of_structs_find_item_index_in_uint64_array_after_if_else@5:
     b dynamic_array_of_structs_find_item_index_in_uint64_array_for_header@2
 
 dynamic_array_of_structs_find_item_index_in_uint64_array_after_for@7:
-    // contract.py:105
+    // contract.py:104
     // return arc4.UInt64(0), UInt64(0)
     intc_2 // 0
     bytec_3 // 0x0000000000000000
     bury 7
-    // contract.py:96
+    // contract.py:95
     // @abimethod
     b dynamic_array_of_structs_find_item_index_in_uint64_array_after_inlined_contract.Test.dynamic_array_of_structs_find_item_index_in_uint64_array@8
 
 
 // contract.Test.dynamic_array_of_structs_adjust_item_at_index[routing]() -> void:
 dynamic_array_of_structs_adjust_item_at_index:
-    // contract.py:107
+    // contract.py:106
     // @abimethod
     txna ApplicationArgs 1
     btoi
     txna ApplicationArgs 2
     btoi
     txna ApplicationArgs 3
-    // contract.py:109
+    // contract.py:108
     // box_value = self.test_nested_struct_box_map[Txn.sender].copy()
     bytec_1 // "t2"
     txn Sender
     concat
     box_get
     assert // check self.test_nested_struct_box_map entry exists
-    // contract.py:110-111
+    // contract.py:109-110
     // target_struct = box_value[struct_index].copy()
     // uint64_dynamic_array = target_struct.unknown_length_uint64_array.copy()
     dup
@@ -647,7 +647,7 @@ dynamic_array_of_structs_adjust_item_at_index:
     dig 2
     uncover 2
     substring3
-    // contract.py:112
+    // contract.py:111
     // uint64_dynamic_array[index] = new_num
     uncover 11
     intc_3 // 8
@@ -656,7 +656,7 @@ dynamic_array_of_structs_adjust_item_at_index:
     +
     uncover 11
     replace3 // on error: index access is out of bounds
-    // contract.py:113
+    // contract.py:112
     // box_value[struct_index].unknown_length_uint64_array = uint64_dynamic_array.copy()
     uncover 2
     intc_2 // 0
@@ -735,7 +735,7 @@ dynamic_array_of_structs_adjust_item_at_index_after_for@4:
     dig 5
     dig 3
     concat
-    // contract.py:114
+    // contract.py:113
     // self.test_nested_struct_box_map[Txn.sender] = box_value.copy()
     bytec_1 // "t2"
     txn Sender
@@ -745,7 +745,7 @@ dynamic_array_of_structs_adjust_item_at_index_after_for@4:
     pop
     swap
     box_put
-    // contract.py:107
+    // contract.py:106
     // @abimethod
     intc_1 // 1
     return
