@@ -1,1 +1,3 @@
+pip install algokit-client-generator & algokit to get access to the below
+
 algokit compile py contract.py --output-arc56 --out-dir contract_files; algokitgen-py -a 'contract_files/Test.arc56.json' -o 'contract_files/TestClient.py'
